@@ -1,0 +1,8 @@
+# nascondere dati importanti
+config.prod.php
+
+# nascondere upload
+uploads/
+
+.DS_Store
+Thumbs.db
