@@ -1,7 +1,7 @@
 -- Parte DDL
 
-CREATE DATABASE Olmo;
-USE Olmo;
+CREATE DATABASE Olmo13;
+USE Olmo13;
 
 CREATE TABLE utenti(
     id_utente INT NOT NULL AUTO_INCREMENT, 
