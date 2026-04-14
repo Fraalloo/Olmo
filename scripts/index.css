@@ -1,0 +1,209 @@
+body {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.title-i {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: clamp(54px, 7vw, 68px);
+    line-height: 0.95;
+    color: #7c5d42;
+    margin-bottom: 18px;
+}
+
+.topbar {
+    background-color: #657646d0;
+}
+
+.footer {
+    background-color: #657646d0;
+}
+
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth {
+    display: flex;
+    gap: 8px;
+    margin-left: 8px;
+}
+
+.auth a {
+    padding: 7px 16px;
+    border: 1px solid #151515;
+    font-size: 11px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth .register {
+    background: #000;
+    color: #fff;
+}
+
+.hero {
+    position: relative;
+    flex: 1;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("../src/assets/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 54px 20px 70px;
+}
+
+.bg-shape {
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    opacity: 0.65;
+    pointer-events: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.hero-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 760px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.tree-card {
+    width: min(470px, 92vw);
+    height: 168px;
+    background-color: #ffffff;
+    border-radius: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
+}
+
+.hero-tree-image {
+    max-width: 330px;
+    max-height: 165px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.title {
+    font-family: "Vibur", "Brush Script MT", "Segoe Script", cursive;
+    font-size: clamp(62px, 8vw, 78px);
+    line-height: 0.95;
+    color: var(--accent);
+    margin-bottom: 18px;
+}
+
+.subtitle {
+    max-width: 520px;
+    font-size: clamp(24px, 3vw, 30px);
+    line-height: 1.08;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    margin-bottom: 22px;
+}
+
+.cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 235px;
+    height: 84px;
+    padding: 0 34px;
+    border: 2px solid var(--button-border);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.35);
+    font-size: clamp(34px, 5vw, 40px);
+    color: #171717;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.footer-inner-index {
+    width: min(730px, calc(100% - 48px));
+    margin: 0 auto;
+    border-top: 1px solid #bcbcbc;
+    padding-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    gap: 20px;
+    font-size: 10px;
+    color: #1f1f1f;
+}
+
+.footer-inner-index > :first-child {
+    justify-self: start;
+}
+
+.footer-inner-index > :last-child {
+    justify-self: end;
+}
+
+@media(max-width: 768px){
+     .auth {
+        flex-wrap: wrap;
+    }
+
+    .hero {
+        padding: 42px 16px 56px;
+    }
+
+    .tree-card {
+        height: 148px;
+        border-radius: 54px;
+    }
+
+    .subtitle {
+        font-size: 20px;
+        max-width: 350px;
+    }
+
+    .cta {
+        min-width: 210px;
+        height: 72px;
+        font-size: 30px;
+    }
+
+    .bg-shape-left {
+        left: -220px;
+        top: 100px;
+    }
+
+    .bg-shape-right {
+        right: -180px;
+        bottom: 90px;
+    }
+
+    .footer-inner-index {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(2, auto);
+        text-align: center;
+    }
+
+    .footer-inner-index > :first-child,
+    .footer-inner-index > :last-child {
+        justify-self: center;
+    }
+}

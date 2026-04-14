@@ -35,7 +35,7 @@
     <body>
         <div class="page">
             <header class="topbar">
-                <a href="index.php" class="brand-small">Sotto l'Olmo</a>
+                <a href="../../index.php" class="brand-small">Sotto l'Olmo</a>
 
                 <nav class="nav-links">
                     <a href="#">Come funziona</a>

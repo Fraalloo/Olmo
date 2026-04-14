@@ -23,7 +23,7 @@
             ?>
             <img class="pfp-image" src="<?= TO_ASSETS.$_SESSION["pfp"] ?>" alt="Foto profilo">
             <br>
-            <a href="../auth/logout.php">logut</a>
+            <a href="../auth/logout.php">logout</a>
         </main>
     </body>
 </html>
