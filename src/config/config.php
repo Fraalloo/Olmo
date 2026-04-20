@@ -9,4 +9,6 @@
     if(!$conn){
         die("Errore connessione database.");
     }
+
+    header("Location: ../../index.php");
 ?>

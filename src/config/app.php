@@ -12,4 +12,6 @@
 
     const MAX_PFP_SIZE = 2 * 1024 * 1024; // 2 MB
     const ALLOWED_PFP_MIME = ["image/jpeg", "image/png", "image/webp"];
+
+    header("Location: ../../index.php");
 ?>
