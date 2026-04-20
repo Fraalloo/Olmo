@@ -2,12 +2,14 @@
 <html>
     <head>
         <title>Inizializzazione Web App - completata</title>
-        <link rel="stylesheet" href="../style.css">
     </head>
     <body>
         <div align="center">
             <?php
-                require_once "../src/config/config.php";
+                if(file_exists("../src/config/config.prod.php"))
+                    require_once "../src/config/config.prod.php";
+                else
+                    require_once "../src/config/config.test.php";
 
                 const DBSCHEMA = "../db/db_schema.sql";
                 $conn_i = mysqli_connect($host, $user, $password);
