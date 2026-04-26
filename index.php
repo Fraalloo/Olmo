@@ -4,7 +4,7 @@
     session_start();
 
     if(isset($_SESSION["user_id"]) && !empty($_SESSION["user_id"])){
-        header("Location: ./src/pages/home.php");
+        header("Location: ./src/pages/home/home.php");
         exit;
     }
 ?>

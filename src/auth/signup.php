@@ -111,7 +111,7 @@
         }
 
         // Percorso da salvare nel DB
-        $pfpPath = "uploads/pfp/" . $fileName;
+        $pfpPath = UPLOAD_PFP . $fileName;
     }
 
     // Inserimento nel DB

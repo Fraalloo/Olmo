@@ -55,6 +55,6 @@
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
 
-    header("Location: ../pages/home.php");
+    header("Location: ../pages/home/home.php");
     exit;
 ?>
