@@ -189,6 +189,78 @@
     color: #666;
 }
 
+.article-search-form {
+    width: 100%;
+    margin: 20px 0 30px;
+    padding: 18px;
+    background: #f8f6f1;
+    border: 1px solid #d5cec2;
+    border-radius: 18px;
+}
+
+.search-main-row {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.search-main-row input {
+    flex: 1;
+    min-width: 0;
+}
+
+.search-main-row button,
+.search-main-row a {
+    flex-shrink: 0;
+}
+
+.article-search-form input,
+.article-search-form select {
+    padding: 11px 14px;
+    border: 1px solid #111;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 14px;
+    width: 100%;
+}
+
+.article-search-form button,
+.article-search-form a {
+    padding: 11px 16px;
+    border: 1px solid #111;
+    border-radius: 8px;
+    background: #111;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.advanced-filters {
+    display: none;
+    margin-top: 14px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+}
+
+.advanced-filters.is-open {
+    display: grid;
+}
+
+.date-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.date-filter input {
+    width: 100%;
+}
+
 .content-list-section h1 {
     font-size: 46px;
     margin-bottom: 10px;
@@ -316,6 +388,30 @@
     color: #fff;
 }
 
+.topbar_nav a.btn-logout {
+    background: #c0392b;
+    border: 1px solid #c0392b;
+    color: #fff;
+}
+
+.topbar_nav a.btn-logout:hover {
+    background: #fff;
+    border-color: #c0392b;
+    color: #c0392b;
+}
+
+.article-search-form button.btn-filter-toggle {
+    background: #c0392b;
+    border: 1px solid #c0392b;
+    color: #fff;
+}
+
+.article-search-form button.btn-filter-toggle:hover {
+    background: #fff;
+    border-color: #c0392b;
+    color: #c0392b;
+}
+
 @media(max-width: 900px){
     .topbar {
         flex-direction: column;
@@ -348,6 +444,15 @@
 
     .search-form button {
         white-space: nowrap;
+    }
+
+    .search-main-row {
+        flex-direction: column;
+    }
+
+    .search-main-row button,
+    .search-main-row a {
+        width: 100%;
     }
 
     .external-grid {

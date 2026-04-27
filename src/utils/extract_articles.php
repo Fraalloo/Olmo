@@ -1,22 +1,12 @@
 <?php
-    function where_for_id($onlyMine = false, $userId = null){
-        $whereMine = "";
+    require_once "filters.php";
 
-        if($onlyMine && $userId !== null){
-            $userId = (int)$userId;
-            $whereMine = " AND a.id_pubblicatore = $userId ";
-        }
-        
-        return $whereMine;
-    }
-
-    function extract_articles($conn, $limit = 20, $page = 1, $onlyMine = false, $userId = null){
+    function extract_articles($conn, $limit = 20, $page = 1, $onlyMine = false, $userId = null, $filters = []){
         $limit = (int)$limit;
         $page = max(1, (int)$page);
         $offset = ($page - 1) * $limit;
-        $whereMine = where_for_id($onlyMine, $userId);
 
-        $result = mysqli_query($conn, "
+        $query = "
             SELECT
                 a.id_articolo,
                 a.id_gruppo_articolo,
@@ -34,16 +24,29 @@
                 a.id_tipo_articolo = t.id_tipo_articolo AND
                 a.id_pubblicatore = u.id_utente AND
                 a.is_active = 1
-                $whereMine
-            ORDER BY
-                a.data_pubblicazione DESC,
-                a.titolo ASC
-            LIMIT $limit OFFSET $offset
-        ");
-        $articoli = [];
+        ";
 
+        $params = [];
+        $types = "";
+
+        addOnlyMineFilter($query, $types, $params, $onlyMine, $userId);
+        addAdvancedFilters($query, $types, $params, $filters);
+
+        $query .= " ORDER BY a.data_pubblicazione DESC LIMIT ? OFFSET ?";
+        $types .= "ii";
+        $params[] = $limit;
+        $params[] = $offset;
+
+        $stmt = mysqli_prepare($conn, $query);
+        if($types !== ""){
+            mysqli_stmt_bind_param($stmt, $types, ...$params);
+        }
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        $articoli = [];
         if($result){
-            while ($row = mysqli_fetch_array($result)) {
+            while($row = mysqli_fetch_array($result)){
                 $articoli[] = $row;
             }
         }
@@ -51,10 +54,8 @@
         return $articoli;
     }
 
-    function extract_map_articles($conn, $onlyMine = false, $userId = null){
-        $whereMine = where_for_id($onlyMine, $userId);
-
-        $result = mysqli_query($conn, "
+    function extract_map_articles($conn, $onlyMine = false, $userId = null, $search = ""){
+        $query = "
             SELECT
                 a.id_articolo,
                 a.titolo,
@@ -69,11 +70,23 @@
                 a.latitudine IS NOT NULL AND
                 a.longitudine IS NOT NULL AND
                 t.descrizione = 'luogo'
-                $whereMine
-            ORDER BY a.data_pubblicazione DESC
-        ");
-        $articoli = [];
+        ";
 
+        $params = [];
+        $types = "";
+
+        addOnlyMineFilter($query, $types, $params, $onlyMine, $userId);
+        addSearchFilter($query, $types, $params, $search);
+
+        $query .= " ORDER BY a.data_pubblicazione DESC";
+        $stmt = mysqli_prepare($conn, $query);
+        if($types !== ""){
+            mysqli_stmt_bind_param($stmt, $types, ...$params);
+        }
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        $articoli = [];
         if($result){
             while($row = mysqli_fetch_array($result)){
                 $articoli[] = $row;
@@ -83,17 +96,30 @@
         return $articoli;
     }
 
-    function count_active_articles($conn, $onlyMine = false, $userId = null){
-        $whereMine = where_for_id($onlyMine, $userId);
-
-        $result = mysqli_query($conn, "
+    function count_active_articles($conn, $onlyMine = false, $userId = null, $filters = []){
+        $query = "
             SELECT COUNT(*) AS totale
-            FROM articoli a
-            WHERE is_active = 1
-            $whereMine
-        ");
-        $tot = mysqli_fetch_array($result);
+            FROM articoli a, tipi_articoli t, utenti u
+            WHERE
+                a.id_tipo_articolo = t.id_tipo_articolo
+                AND a.id_pubblicatore = u.id_utente
+                AND a.is_active = 1
+        ";
 
+        $params = [];
+        $types = "";
+
+        addOnlyMineFilter($query, $types, $params, $onlyMine, $userId);
+        addAdvancedFilters($query, $types, $params, $filters);
+
+        $stmt = mysqli_prepare($conn, $query);
+        if($types !== ""){
+            mysqli_stmt_bind_param($stmt, $types, ...$params);
+        }
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        $tot = mysqli_fetch_array($result);
         return (int)$tot["totale"];
     }
 ?>

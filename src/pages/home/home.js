@@ -105,6 +105,32 @@ const initNominatimSearch = () => {
     })
 }
 
+const initToggleFilters = () => {
+    const toggleFiltersBtn = document.getElementById("toggleFiltersBtn")
+    const advancedFilters = document.getElementById("advancedFilters")
+    const filtersOpenInput = document.getElementById("filtersOpenInput")
+
+    if(toggleFiltersBtn && advancedFilters && filtersOpenInput){
+        const updateButtonText = () => {
+            const isOpen = advancedFilters.classList.contains("is-open")
+
+            toggleFiltersBtn.textContent = isOpen
+                ? "Nascondi filtri"
+                : "Mostra filtri"
+
+            filtersOpenInput.value = isOpen ? "1" : "0"
+        }
+
+        updateButtonText()
+
+        toggleFiltersBtn.addEventListener("click", () => {
+            advancedFilters.classList.toggle("is-open")
+            updateButtonText()
+        })
+    }
+}
+
 initMarkers()
 initLocateButtons()
 initNominatimSearch()
+initToggleFilters()

@@ -13,23 +13,55 @@
         exit;
     }
 
-    $showOnlyMine = isset($_GET["mine"]) && $_GET["mine"] == "1";
-    $mineQuery = $showOnlyMine ? "&mine=1" : "";
+    // Valori dell'utente
     $userId = (int)$_SESSION["user_id"];
     $isAdmin = $_SESSION["is_admin"];
     $pfp = $_SESSION["pfp"];
     $username = $_SESSION["username"];
 
+    // Paginazione
     $page = isset($_GET["page"]) ? (int)$_GET["page"] : 1;
     if($page < 1){
         $page = 1;
     }
     $limit = 10;
 
-    $articoli = extract_articles($conn, $limit, $page, $showOnlyMine, $userId);
-    $mapArticles = extract_map_articles($conn, $showOnlyMine, $userId);
+    // Filtri
+    $showOnlyMine = isset($_GET["mine"]) && $_GET["mine"] == "1";
+    $search = isset($_GET["search"]) ? trim($_GET["search"]) : "";
+    $type = isset($_GET["type"]) ? trim($_GET["type"]) : "";
+    $author = isset($_GET["author"]) ? trim($_GET["author"]) : "";
+    $coords = isset($_GET["coords"]) ? trim($_GET["coords"]) : "";
+    $dateFrom = isset($_GET["date_from"]) ? trim($_GET["date_from"]) : "";
+    $dateTo = isset($_GET["date_to"]) ? trim($_GET["date_to"]) : "";
+    $hasBanner = isset($_GET["has_banner"]) && $_GET["has_banner"] === "1";
+    $filtersOpen = isset($_GET["filters_open"]) && $_GET["filters_open"] === "1";
+    $filters = [
+        "search" => $search,
+        "type" => $type,
+        "author" => $author,
+        "coords" => $coords,
+        "date_from" => $dateFrom,
+        "date_to" => $dateTo,
+        "has_banner" => $hasBanner
+    ];
+    $queryExtra = "";
 
-    $totalArticles = count_active_articles($conn, $showOnlyMine, $userId);
+    // Conservazione dei filtri nella paginazione
+    if($showOnlyMine) $queryExtra .= "&mine=1";
+    if($search !== "") $queryExtra .= "&search=" . urlencode($search);
+    if($type !== "") $queryExtra .= "&type=" . urlencode($type);
+    if($author !== "") $queryExtra .= "&author=" . urlencode($author);
+    if($coords !== "") $queryExtra .= "&coords=" . urlencode($coords);
+    if($dateFrom !== "") $queryExtra .= "&date_from=" . urlencode($dateFrom);
+    if($dateTo !== "") $queryExtra .= "&date_to=" . urlencode($dateTo);
+    if($hasBanner) $queryExtra .= "&has_banner=1";
+    if($filtersOpen) $queryExtra .= "&filters_open=1";
+
+    $articoli = extract_articles($conn, $limit, $page, $showOnlyMine, $userId, $filters);
+    $mapArticles = extract_map_articles($conn, $showOnlyMine, $userId, $search);
+
+    $totalArticles = count_active_articles($conn, $showOnlyMine, $userId, $filters);
     $totalPages = ceil($totalArticles / $limit);
 ?>
 <!DOCTYPE html>
@@ -104,6 +136,66 @@
                     <?php endif; ?>
                 </div>
             </section>
+
+            <form class="article-search-form" method="GET" action="home.php" id="articleFiltersForm">
+                <?php if($showOnlyMine): ?>
+                    <input type="hidden" name="mine" value="1">
+                <?php endif; ?>
+                <input
+                    type="hidden"
+                    name="filters_open"
+                    id="filtersOpenInput"
+                    value="<?= isset($_GET["filters_open"]) && $_GET["filters_open"] === "1" ? "1" : "0" ?>"
+                >
+
+                <div class="search-main-row">
+                    <input
+                        type="text"
+                        name="search"
+                        id="articleSearchInput"
+                        placeholder="Cerca per titolo o testo..."
+                        value="<?= esc($search) ?>"
+                    >
+
+                    <button type="button" id="toggleFiltersBtn" class="btn-filter-toggle">
+                        Mostra Filtri
+                    </button>
+
+                    <button type="submit">Cerca</button>
+
+                    <a href="home.php<?= $showOnlyMine ? '?mine=1' : '' ?>">Annulla</a>
+                </div>
+
+                <div
+                    class="advanced-filters <?= isset($_GET["filters_open"]) && $_GET["filters_open"] === "1" ? "is-open" : "" ?>"
+                    id="advancedFilters"
+                >
+                    <select name="type">
+                        <option value="">Tutti i tipi</option>
+                        <option value="luogo" <?= $type === "luogo" ? "selected" : "" ?>>Luoghi</option>
+                        <option value="documento" <?= $type === "documento" ? "selected" : "" ?>>Documenti</option>
+                        <option value="testimonianza" <?= $type === "testimonianza" ? "selected" : "" ?>>Testimonianze</option>
+                    </select>
+
+                    <input type="text" name="author" placeholder="Autore..." value="<?= esc($author) ?>">
+
+                    <select name="coords">
+                        <option value="">Coordinate: tutte</option>
+                        <option value="with" <?= $coords === "with" ? "selected" : "" ?>>Solo con coordinate</option>
+                        <option value="without" <?= $coords === "without" ? "selected" : "" ?>>Solo senza coordinate</option>
+                    </select>
+
+                    <label class="date-filter">
+                        <span>Data di partenza</span>
+                        <input type="date" name="date_from" value="<?= esc($dateFrom) ?>">
+                    </label>
+
+                    <label class="date-filter">
+                        <span>Data di fine</span>
+                        <input type="date" name="date_to" value="<?= esc($dateTo) ?>">
+                    </label>
+                </div>
+            </form>
 
             <section class="content-list-section">
                 <h1>Luoghi, documenti e testimonianze:</h1>
@@ -192,13 +284,13 @@
 
             <div class="pagination">
                 <?php if($page > 1):?>
-                    <a class="page-arrow" href="?page=<?= $page - 1 ?><?= $mineQuery ?>">←</a>
+                    <a class="page-arrow" href="?page=<?= $page - 1 ?><?= $queryExtra ?>">←</a>
                 <?php endif; ?>
 
                 <span>Pagina <?= $page ?> di <?= $totalPages ?></span>
 
                 <?php if($page < $totalPages): ?>
-                    <a class="page-arrow" href="?page=<?= $page + 1 ?><?= $mineQuery ?>">→</a>
+                    <a class="page-arrow" href="?page=<?= $page + 1 ?><?= $queryExtra ?>">→</a>
                 <?php endif; ?>
             </div>
         </main>
