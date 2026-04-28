@@ -42,7 +42,6 @@
         "coords" => $coords,
         "date_from" => $dateFrom,
         "date_to" => $dateTo,
-        "has_banner" => $hasBanner
     ];
     $queryExtra = "";
 

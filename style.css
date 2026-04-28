@@ -68,6 +68,12 @@ a {
 .footer {
     background: var(--footer-bg);
     padding: 18px 0 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 100px;
 }
 
 .footer-inner {
