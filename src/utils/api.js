@@ -1,4 +1,4 @@
-export const fetchWeather = async (lat, lng) => {
+export const fetch_weather = async (lat, lng) => {
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${encodeURIComponent(lat)}&longitude=${encodeURIComponent(lng)}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m`
     const response = await fetch(url)
 
@@ -19,7 +19,7 @@ export const fetchWeather = async (lat, lng) => {
     }
 }
 
-export const fetchWikipedia = async placeName => {
+export const fetch_wikipedia = async placeName => {
     const url = `https://it.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(placeName)}`
 
     const response = await fetch(url)

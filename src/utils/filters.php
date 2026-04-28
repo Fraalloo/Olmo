@@ -24,7 +24,6 @@
         $coords = $filters["coords"] ?? "";
         $dateFrom = $filters["date_from"] ?? "";
         $dateTo = $filters["date_to"] ?? "";
-        $hasBanner = $filters["has_banner"] ?? false;
 
         addSearchFilter($query, $types, $params, $search);
 
@@ -58,10 +57,6 @@
             $query .= " AND a.data_pubblicazione <= ?";
             $types .= "s";
             $params[] = $dateTo;
-        }
-
-        if($hasBanner){
-            $query .= " AND a.banner IS NOT NULL AND a.banner <> ''";
         }
     }
 ?>

@@ -34,7 +34,6 @@
     $coords = isset($_GET["coords"]) ? trim($_GET["coords"]) : "";
     $dateFrom = isset($_GET["date_from"]) ? trim($_GET["date_from"]) : "";
     $dateTo = isset($_GET["date_to"]) ? trim($_GET["date_to"]) : "";
-    $hasBanner = isset($_GET["has_banner"]) && $_GET["has_banner"] === "1";
     $filtersOpen = isset($_GET["filters_open"]) && $_GET["filters_open"] === "1";
     $filters = [
         "search" => $search,
@@ -55,7 +54,6 @@
     if($coords !== "") $queryExtra .= "&coords=" . urlencode($coords);
     if($dateFrom !== "") $queryExtra .= "&date_from=" . urlencode($dateFrom);
     if($dateTo !== "") $queryExtra .= "&date_to=" . urlencode($dateTo);
-    if($hasBanner) $queryExtra .= "&has_banner=1";
     if($filtersOpen) $queryExtra .= "&filters_open=1";
 
     $articoli = extract_articles($conn, $limit, $page, $showOnlyMine, $userId, $filters);
