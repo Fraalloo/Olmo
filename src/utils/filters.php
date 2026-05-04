@@ -59,4 +59,40 @@
             $params[] = $dateTo;
         }
     }
+
+        function addUserFilters(&$query, &$types, &$params, $filters){
+        if(!empty($filters["search"])){
+            $query .= " AND nome_utente LIKE ?";
+            $types .= "s";
+            $params[] = "%" . $filters["search"] . "%";
+        }
+
+        if($filters["role"] !== ""){
+            if($filters["role"] === "admin"){
+                $query .= " AND is_admin = 1";
+            } elseif($filters["role"] === "user"){
+                $query .= " AND is_admin = 0";
+            }
+        }
+
+        if($filters["security"] !== ""){
+            if($filters["security"] === "must_change"){
+                $query .= " AND must_change_password = 1";
+            } elseif($filters["security"] === "ok"){
+                $query .= " AND must_change_password = 0";
+            }
+        }
+
+        if(!empty($filters["date_from"])){
+            $query .= " AND data_registrazione >= ?";
+            $types .= "s";
+            $params[] = $filters["date_from"];
+        }
+
+        if(!empty($filters["date_to"])){
+            $query .= " AND data_registrazione <= ?";
+            $types .= "s";
+            $params[] = $filters["date_to"];
+        }
+    }
 ?>

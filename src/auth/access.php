@@ -1,5 +1,6 @@
 <?php
     require_once "../config/app.php";
+    require_once "../components/footer/footer.php";
 
     session_start();
 
@@ -24,9 +25,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?= $isLogin ? "Login" : "Registrazione" ?> | Sotto l'Olmo</title>
 
+        <link rel="stylesheet" href="../components/footer/footer.css">
         <link rel="stylesheet" href="../../style.css">
         <link rel="stylesheet" href="access.css">
-        <link rel="icon" type="image/png" href="./src/assets/favicon.png">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -92,21 +93,8 @@
                     </p>
                 </section>
             </main>
-
-            <footer class="footer">
-                <div class="footer-inner">
-                    <p>© 2026 Sotto l'Olmo. All rights reserved.</p>
-
-                    <a href="../../index.php" class="home-button">Home</a>
-
-                    <div class="footer-links">
-                        <a href="#">Privacy Policy</a>
-                        <a href="#">Terms of Service</a>
-                        <a href="#">Cookies Settings</a>
-                        <p>version <?= CURR_VERS ?></p>
-                    </div>
-                </div>
-            </footer>
         </div>
+
+        <?php render_footer("home-button", "../../index.php", "Home"); ?>
     </body>
 </html>

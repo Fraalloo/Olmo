@@ -4,5 +4,8 @@ config.prod.php
 # nascondere upload
 /uploads/
 
+# nascondere file temporanei
+/temp/
+
 .DS_Store
 Thumbs.db

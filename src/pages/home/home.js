@@ -23,7 +23,7 @@ const buildPopupContent = item => {
             <strong>${escapeHtml(item.titolo)}</strong><br>
             <span>${escapeHtml(item.tipo_articolo)}</span><br>
             <small>${escapeHtml(shortDescription)}</small><br><br>
-            <a href="#">Apri articolo</a>
+            <a href="../article/article.php?id=${escapeHtml(item.id_articolo)}">Apri articolo</a>
         </div>
     `
 }

@@ -16,7 +16,13 @@
     }
 
     $query = "
-        SELECT id_utente, nome_utente, password_hash, pfp, is_admin
+        SELECT
+            id_utente,
+            nome_utente,
+            password_hash,
+            pfp,
+            is_admin,
+            must_change_password
         FROM utenti
         WHERE nome_utente = ?
     ";
@@ -26,34 +32,52 @@
     mysqli_stmt_execute($stmt);
     mysqli_stmt_store_result($stmt);
 
-    if(mysqli_stmt_num_rows($stmt) !== 1) {
+    if(mysqli_stmt_num_rows($stmt) !== 1){
         $_SESSION["access_error"] = "Credenziali non valide.";
+        mysqli_stmt_close($stmt);
         header("Location: access.php");
         exit;
     }
 
-    mysqli_stmt_bind_result($stmt, $idUtente, $nomeUtente, $passwordHash, $pfp, $isAdmin);
+    mysqli_stmt_bind_result(
+        $stmt,
+        $idUtente,
+        $nomeUtente,
+        $passwordHash,
+        $pfp,
+        $isAdmin,
+        $mustChangePassword
+    );
+
     mysqli_stmt_fetch($stmt);
 
-    if(!is_string($passwordHash) || $passwordHash === ''){
+    if(!is_string($passwordHash) || $passwordHash === ""){
         $_SESSION["access_error"] = "Credenziali non valide.";
+        mysqli_stmt_close($stmt);
         header("Location: access.php");
         exit;
     }
 
     if(!password_verify($password, $passwordHash)){
         $_SESSION["access_error"] = "Credenziali non valide.";
+        mysqli_stmt_close($stmt);
         header("Location: access.php");
         exit;
     }
 
-    $_SESSION["user_id"] = $idUtente;
+    $_SESSION["user_id"] = (int)$idUtente;
     $_SESSION["username"] = $nomeUtente;
-    $_SESSION["is_admin"] = (bool)$isAdmin;
+    $_SESSION["is_admin"] = !empty($isAdmin);
     $_SESSION["pfp"] = !empty($pfp) ? $pfp : DEFAULT_PFP;
+    $_SESSION["must_change_password"] = !empty($mustChangePassword);
 
     mysqli_stmt_close($stmt);
     mysqli_close($conn);
+
+    if(!empty($_SESSION["must_change_password"])){
+        header("Location: ../pages/profile/profile.php?force_password=1");
+        exit;
+    }
 
     header("Location: ../pages/home/home.php");
     exit;

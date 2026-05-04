@@ -120,6 +120,17 @@
     background: rgba(255, 255, 255, 0.7);
 }
 
+.footer {
+    background: var(--footer-bg);
+    padding: 18px 0 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 100px;
+}
+
 .footer-inner-index {
     width: min(730px, calc(100% - 48px));
     margin: 0 auto;
@@ -139,6 +150,14 @@
 
 .footer-inner-index > :last-child {
     justify-self: end;
+}
+
+.footer-links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 @media(max-width: 768px){

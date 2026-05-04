@@ -1,6 +1,7 @@
 <?php
     const APP_NAME = "Sotto l'Olmo";
-    const CURR_VERS = "v0.1.2";
+    const CURR_VERS = "v0.1.3";
+    const DEBUG = true;
 
     const PROJECT_ROOT = __DIR__."/../../";
 
@@ -15,4 +16,10 @@
 
     const MAX_PFP_SIZE = 2 * 1024 * 1024; // 2 MB
     const ALLOWED_PFP_MIME = ["image/jpeg", "image/png", "image/webp"];
+
+    if(DEBUG){
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+    }
 ?>

@@ -1,0 +1,168 @@
+.admin-article-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.admin-action-form {
+    margin: 0;
+}
+
+.admin-action-btn {
+    min-width: 132px;
+    border-radius: 999px;
+    padding: 10px 18px;
+    border: 1px solid transparent;
+    font-family: "Vibur", cursive;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-admin-approve,
+.btn-admin-restore {
+    background: #2e7d32;
+    color: #fff;
+    border-color: #2e7d32;
+}
+
+.btn-admin-approve:hover,
+.btn-admin-restore:hover {
+    background: #fff;
+    color: #2e7d32;
+}
+
+.btn-admin-hide,
+.btn-admin-reject {
+    background: #c0392b;
+    color: #fff;
+    border-color: #c0392b;
+}
+
+.btn-admin-hide:hover,
+.btn-admin-reject:hover {
+    background: #fff;
+    color: #c0392b;
+}
+
+.admin-action-btn:active {
+    transform: scale(0.97);
+}
+
+.admin-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+.admin-modal-overlay[hidden] {
+    display: none;
+}
+
+.admin-modal {
+    width: min(440px, 100%);
+    background: #f8f6f1;
+    border: 6px solid #cfc6b7;
+    border-radius: 28px;
+    padding: 26px;
+    text-align: center;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+}
+
+.admin-modal h2 {
+    font-family: "Vibur", cursive;
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+.admin-modal p {
+    color: #2d241d;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.admin-modal-message {
+    font-weight: bold;
+}
+
+.modal-approve h2,
+.modal-restore h2,
+.modal-approve .admin-modal-message,
+.modal-restore .admin-modal-message {
+    color: #2e7d32;
+}
+
+.modal-reject h2,
+.modal-hide h2,
+.modal-reject .admin-modal-message,
+.modal-hide .admin-modal-message {
+    color: #c0392b;
+}
+
+.admin-modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.btn-modal-cancel,
+.btn-modal-confirm {
+    min-width: 110px;
+    border-radius: 999px;
+    padding: 11px 18px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.btn-modal-cancel {
+    background: #1f1f1f;
+    color: #fff;
+    border-color: #1f1f1f;
+}
+
+.btn-modal-cancel:hover {
+    background: #fff;
+    color: #1f1f1f;
+}
+
+.modal-approve .btn-modal-confirm,
+.modal-restore .btn-modal-confirm {
+    background: #2e7d32;
+    color: #fff;
+    border-color: #2e7d32;
+}
+
+.modal-approve .btn-modal-confirm:hover,
+.modal-restore .btn-modal-confirm:hover {
+    background: #fff;
+    color: #2e7d32;
+}
+
+.modal-reject .btn-modal-confirm,
+.modal-hide .btn-modal-confirm {
+    background: #c0392b;
+    color: #fff;
+    border-color: #c0392b;
+}
+
+.modal-reject .btn-modal-confirm:hover,
+.modal-hide .btn-modal-confirm:hover {
+    background: #fff;
+    color: #c0392b;
+}
+
+.modal-open {
+    overflow: hidden;
+}

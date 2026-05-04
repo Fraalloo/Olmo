@@ -10,11 +10,13 @@ CREATE TABLE utenti(
     pfp VARCHAR(255),
     data_registrazione DATE NOT NULL DEFAULT CURRENT_DATE,
     is_admin BOOLEAN NOT NULL DEFAULT 0,
+    must_change_password BOOLEAN NOT NULL DEFAULT 0,
 
     CONSTRAINT PK_utenti PRIMARY KEY(id_utente),
 
     CONSTRAINT CK_utenti_is_admin CHECK(is_admin IN (0,1)),
-    CONSTRAINT CK_nome_lenght CHECK(LENGTH(nome_utente) > 3)
+    CONSTRAINT CK_nome_length CHECK(LENGTH(nome_utente) > 3),
+    CONSTRAINT CK_utenti_must_change_password CHECK(must_change_password IN (0,1))
 );
 
 CREATE TABLE tipi_articoli(
@@ -45,6 +47,7 @@ CREATE TABLE articoli(
     data_pubblicazione DATE NOT NULL DEFAULT CURRENT_DATE,
     versione INT NOT NULL DEFAULT 1,
     is_active BOOLEAN NOT NULL DEFAULT 0,
+    is_hidden BOOLEAN NOT NULL DEFAULT 0,
 
     CONSTRAINT PK_articoli PRIMARY KEY(id_articolo),
 
@@ -66,6 +69,7 @@ CREATE TABLE articoli(
         ON DELETE SET NULL,
 
     CONSTRAINT CK_articoli_is_active CHECK(is_active IN (0,1)),
+    CONSTRAINT CK_articoli_is_hidden CHECK(is_hidden IN (0,1)),
     CONSTRAINT CK_articoli_latitudine CHECK(latitudine IS NULL OR latitudine BETWEEN -90 AND 90),
     CONSTRAINT CK_articoli_longitudine CHECK(longitudine IS NULL OR longitudine BETWEEN -180 AND 180),
     CONSTRAINT CK_articoli_versione CHECK(versione >= 1),
@@ -78,6 +82,7 @@ CREATE INDEX idx_articoli_pubblicatore ON articoli(id_pubblicatore);
 CREATE INDEX idx_articoli_admin ON articoli(id_admin);
 CREATE INDEX idx_articoli_data_pubblicazione ON articoli(data_pubblicazione);
 CREATE INDEX idx_articoli_attivi ON articoli(is_active);
+CREATE INDEX idx_articoli_hidden ON articoli(is_hidden);
 
 CREATE TABLE file_articoli(
     id_file INT NOT NULL AUTO_INCREMENT,
@@ -97,34 +102,20 @@ CREATE TABLE file_articoli(
 
 CREATE INDEX idx_file_articoli_articolo ON file_articoli(id_articolo);
 
-CREATE TABLE link(
-    id_link INT NOT NULL AUTO_INCREMENT, 
-    url_link VARCHAR(255) NOT NULL UNIQUE,
-
-    CONSTRAINT PK_link PRIMARY KEY(id_link)
-);
-
 CREATE TABLE link_articoli(
-    id_link_articolo INT NOT NULL AUTO_INCREMENT, 
+    id_link_articolo INT NOT NULL AUTO_INCREMENT,
     id_articolo INT NOT NULL,
-    id_link INT NOT NULL,
+    url_link VARCHAR(255) NOT NULL,
 
     CONSTRAINT PK_link_articoli PRIMARY KEY(id_link_articolo),
 
-    CONSTRAINT FK1_link_articoli FOREIGN KEY(id_articolo)
+    CONSTRAINT FK_link_articoli FOREIGN KEY(id_articolo)
         REFERENCES articoli(id_articolo)
         ON UPDATE CASCADE
-        ON DELETE CASCADE,
-    CONSTRAINT FK2_link_link FOREIGN KEY(id_link)
-        REFERENCES link(id_link)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE,
-
-    CONSTRAINT UQ_link_articolo UNIQUE(id_articolo, id_link)
+        ON DELETE CASCADE
 );
 
 CREATE INDEX idx_link_articoli_articolo ON link_articoli(id_articolo);
-CREATE INDEX idx_link_articoli_link ON link_articoli(id_link);
 
 
 -- Parte DML
@@ -137,5 +128,5 @@ VALUES
     ('testimonianza');
 
 -- Amministratore
-INSERT INTO utenti(nome_utente, password_hash, is_admin)
-VALUES ("DBAdmin", "$2y$12$MFMnmfE16pJ8b5w30SLBoepi3T4BRhTjhvK.gTEyutNqKr9C/XuVS", 1)
+INSERT INTO utenti(id_utente, nome_utente, password_hash, is_admin, must_change_password)
+VALUES (1, "DBAdmin", "$2y$12$MFMnmfE16pJ8b5w30SLBoepi3T4BRhTjhvK.gTEyutNqKr9C/XuVS", 1, 1)

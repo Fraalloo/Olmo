@@ -36,15 +36,136 @@ a {
 }
 
 .topbar {
-    height: 48px;
-    background: #fff;
-    border-bottom: 1px solid #ececec;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 0 22px;
+    align-items: center;
+    gap: 24px;
+    padding: 16px 24px;
+    background-color: white;
 }
 
+.topbar_left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.topbar_profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.topbar_pfp {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: #111 solid 2px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.topbar_username {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.topbar_title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.topbar_nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.topbar_nav a {
+    color: #111;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.topbar_nav a:hover {
+    text-decoration: underline;
+}
+
+.topbar_nav a.btn-home,
+.topbar_nav a.btn-logout,
+.topbar_nav a.btn-profile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.topbar_nav a.btn-home,
+.topbar_nav a.btn-profile {
+    background: #1f1f1f;
+    color: #fff;
+    border: 1px solid #1f1f1f;
+}
+
+.topbar_nav a.btn-home:hover,
+.topbar_nav a.btn-profile:hover {
+    background: #fff;
+    color: #1f1f1f;
+    text-decoration: none;
+}
+
+.topbar_nav a.btn-logout {
+    background: #c0392b;
+    border: 1px solid #c0392b;
+    color: #fff;
+}
+
+.topbar_nav a.btn-logout:hover {
+    background: #fff;
+    color: #c0392b;
+    text-decoration: none;
+}
+
+.topbar_nav a.btn-home:active,
+.topbar_nav a.btn-profile:active,
+.topbar_nav a.btn-logout:active {
+    transform: scale(0.97);
+}
+
+@media(max-width: 900px){
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .topbar_nav {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .topbar_nav a {
+        font-size: 13px;
+    }
+
+    .topbar_username {
+        font-size: 14px;
+    }
+}
 .brand-small {
     font-size: 24px;
     font-family: "Vibur", "Brush Script MT", "Segoe Script", cursive;
@@ -63,50 +184,6 @@ a {
     display: flex;
     gap: 24px;
     align-items: center;
-}
-
-.footer {
-    background: var(--footer-bg);
-    padding: 18px 0 20px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    height: 100px;
-}
-
-.footer-inner {
-    width: min(730px, calc(100% - 48px));
-    margin: 0 auto;
-    border-top: 1px solid #bcbcbc;
-    padding-top: 18px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    align-items: center;
-    gap: 20px;
-    font-size: 10px;
-    color: #1f1f1f;
-}
-
-.footer-inner > :first-child {
-    justify-self: start;
-}
-
-.footer-inner > :nth-child(2) {
-    justify-self: center;
-}
-
-.footer-inner > :last-child {
-    justify-self: end;
-}
-
-.footer-links {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
 }
 
 @media(max-width: 768px){

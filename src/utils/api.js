@@ -36,7 +36,7 @@ export const fetch_wikipedia = async placeName => {
     }
 }
 
-export async function fetch_nominatim(query) {
+export const fetch_nominatim = async query => {
     const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(query)}`
 
     const response = await fetch(url, {

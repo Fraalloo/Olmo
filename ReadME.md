@@ -38,6 +38,7 @@ creare manualmente nella root del progetto:
 
 - uploads/pfp
 - uploads/banner
+- uploads/file
 
 Impostare i permessi a 700.
 
@@ -62,6 +63,6 @@ Database:
 - I dati riguardanti gli utenti (es. password) sono tutti commentati nei file
 
 File uploads:
-- test/uploads/ contiene immagini di esempio
+- test/uploads/ contiene file di esempio
 - Copiare la cartella nella root del progetto
 - Se necessario, sostituire la directory "uploads/" esistente

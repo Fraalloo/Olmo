@@ -105,7 +105,6 @@
 
         if(!move_uploaded_file($tmpName, $destination)){
             $_SESSION["access_error"] = "Impossibile salvare la foto profilo.";
-            echo $destination;
             header("Location: access.php");
             exit;
         }

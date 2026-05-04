@@ -3,15 +3,17 @@
     require_once "../../config/app.php";
     require_once "../../utils/extract_articles.php";
     require_once "../../utils/utils.php";
+    require_once "../../utils/auth_guard.php";
+
+    require_once "../../components/article_card/article_card.php";
+    require_once "../../components/footer/footer.php";
     
     session_start();
 
     const TO_ASSETS = "../../../";
 
-    if(!isset($_SESSION["user_id"])){
-        header("Location: ../../../index.php");
-        exit;
-    }
+    require_login();
+    require_password_change_if_needed("../profile/profile.php");
 
     // Valori dell'utente
     $userId = (int)$_SESSION["user_id"];
@@ -59,7 +61,7 @@
     $mapArticles = extract_map_articles($conn, $showOnlyMine, $userId, $search);
 
     $totalArticles = count_active_articles($conn, $showOnlyMine, $userId, $filters);
-    $totalPages = ceil($totalArticles / $limit);
+    $totalPages = max(1, (int)ceil($totalArticles / $limit));
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -70,6 +72,8 @@
 
         <link rel="stylesheet" href="../../../style.css">
         <link rel="stylesheet" href="home.css">
+        <link rel="stylesheet" href="../../components/article_card/article_card.css">
+        <link rel="stylesheet" href="../../components/footer/footer.css">
 
         <!-- Importazione di LeafletJS: CSS -->
         <link
@@ -88,10 +92,13 @@
         ></script>
 
         <header class="topbar">
-            <div class="topbar_left">
-                <img class="topbar_pfp" src="<?= esc(TO_ASSETS . $pfp) ?>" alt="Foto profilo">
+            <a class="topbar_profile" href="../profile/profile.php">
+                <?php if(!empty($pfp)): ?>
+                    <img class="topbar_pfp" src="<?= esc(TO_ASSETS . $pfp) ?>" alt="Foto profilo">
+                <?php endif; ?>
+
                 <span class="topbar_username"><?= esc($username) ?></span>
-            </div>
+            </a>
 
             <nav class="topbar_nav">
                 <a href="#">Come funziona</a>
@@ -129,7 +136,8 @@
                     <?php endif; ?>
 
                     <?php if($isAdmin): ?>
-                        <a class="btn-validate" href="#">Convalida contenuti</a>
+                        <a class="btn-validate" href="../convalida/convalida.php">Convalida contenuti</a>
+                        <a class="btn-validate" href="../admin/dashboard.php">Dashboard admin</a>
                     <?php endif; ?>
                 </div>
             </section>
@@ -205,75 +213,12 @@
                 <?php else: ?>
                     <div class="articles-list">
                         <?php foreach($articoli as $articolo): ?>
-                            <?php
-                                $hasCoords = $articolo["latitudine"] !== null && $articolo["longitudine"] !== null;
-                                $banner = !empty($articolo["banner"]) ? TO_ASSETS . $articolo["banner"] : "";
-                            ?>
-                            <article
-                                class="article-card <?= $hasCoords ? 'has-coords' : 'no-coords' ?>"
-                                data-article-id="<?= (int)$articolo["id_articolo"] ?>"
-                                data-title="<?= esc($articolo["titolo"]) ?>"
-                                data-lat="<?= $hasCoords ? esc($articolo["latitudine"]) : '' ?>"
-                                data-lng="<?= $hasCoords ? esc($articolo["longitudine"]) : '' ?>"
-                            >
-                                <div class="article-card-header">
-                                    <div>
-                                        <span class="type-badge type-<?= esc($articolo["tipo_articolo"]) ?>">
-                                            <?= esc(ucfirst($articolo["tipo_articolo"])) ?>
-                                        </span>
-
-                                        <?php if(!$hasCoords): ?>
-                                            <span class="coords-badge coords-badge--missing">Senza coordinate</span>
-                                        <?php else: ?>
-                                            <span class="coords-badge coords-badge--ok">In mappa</span>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-
-                                <div class="article-card-body">
-                                    <?php if(!empty($banner)): ?>
-                                        <img class="article-banner" src="<?= esc($banner) ?>" alt="Banner <?= esc($articolo["titolo"]) ?>">
-                                    <?php endif; ?>
-
-                                    <div class="article-content">
-                                        <h3><?= esc($articolo["titolo"]) ?></h3>
-
-                                        <p class="meta">
-                                            Pubblicato da <strong><?= esc($articolo["autore"]) ?></strong>
-                                            il <?= esc(date("d/m/Y", strtotime($articolo["data_pubblicazione"]))) ?>
-                                        </p>
-
-                                        <p class="description">
-                                            <?= substr(nl2br(esc($articolo["descrizione"])), 0, 500) ?>
-                                            <?php if(strlen($articolo["descrizione"]) > 500): ?>
-                                                <span class="description-cont">(continua...)</span>
-                                            <?php endif; ?>
-                                        </p>
-
-                                        <?php if($hasCoords): ?>
-                                            <p class="coords">
-                                                Coordinate: <?= esc($articolo["latitudine"]) ?>, <?= esc($articolo["longitudine"]) ?>
-                                            </p>
-                                        <?php endif; ?>
-
-                                        <div class="article-actions">
-                                            <?php if($hasCoords): ?>
-                                                <button
-                                                    class="locate-on-map"
-                                                    data-lat="<?= esc($articolo['latitudine']) ?>"
-                                                    data-lng="<?= esc($articolo['longitudine']) ?>"
-                                                >
-                                                    Mostra sulla mappa
-                                                </button>
-                                            <?php endif; ?>
-
-                                            <a class="btn-primary" href="#">
-                                                Apri
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
+                            <?php render_article_card($articolo, [
+                                "to_assets" => TO_ASSETS,
+                                "open_url" => "../article/article.php",
+                                "show_map_button" => true,
+                                "show_validation_actions" => false
+                            ]); ?>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
@@ -292,20 +237,7 @@
             </div>
         </main>
 
-        <footer class="footer">
-            <div class="footer-inner">
-                <p>© 2026 Sotto l'Olmo. All rights reserved.</p>
-
-                <a href="#" class="ins-button">Inserisci</a>
-
-                <div class="footer-links">
-                        <a href="#">Privacy Policy</a>
-                        <a href="#">Terms of Service</a>
-                        <a href="#">Cookies Settings</a>
-                        <p>version <?= CURR_VERS ?></p>
-                </div>
-            </div>
-        </footer>
+        <?php render_footer("ins-button", "#", "Inserisci"); ?>
 
         <!-- Dati da PHP e JS e importazione logica della mappa -->
         <script>
