@@ -145,6 +145,21 @@ a {
     transform: scale(0.97);
 }
 
+.home-button {
+    min-width: 135px;
+    height: 35px;
+    border: 2px solid #23203f;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Vibur", cursive;
+    font-size: 34px;
+    color: #ada798;
+    background: #ffffff;
+}
+
+
 @media(max-width: 900px){
     .topbar {
         flex-direction: column;

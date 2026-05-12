@@ -44,7 +44,7 @@
                     </nav>
 
                     <div class="auth">
-                        <a href="./src/auth/access.php">Accedi</a>
+                        <a href="./src/auth/access.php?mode=login">Accedi</a>
                         <a href="./src/auth/access.php?mode=signup" class="register">Registrati</a>
                     </div>
                 </div>

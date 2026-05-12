@@ -339,4 +339,25 @@
 
         return $files;
     }
+
+    function extract_article_types($conn){
+        $query = "
+            SELECT 
+                id_tipo_articolo, 
+                descrizione 
+            FROM tipi_articoli 
+            ORDER BY descrizione
+        ";
+
+        $result = mysqli_query($conn, $query);
+        $types = [];
+
+        if($result){
+            while($row = mysqli_fetch_array($result)){
+                $types[] = $row;
+            }
+        }
+
+        return $types;
+    }
 ?>

@@ -14,7 +14,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 54px 20px 40px;
 }
 
 .access-card {
@@ -22,10 +21,11 @@
     min-height: 460px;
     background: #ada798;
     border-radius: 36px;
-    padding: 28px 36px 34px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    padding: 28px 20px;
+    margin-bottom: 120px;
 }
 
 .access-title {

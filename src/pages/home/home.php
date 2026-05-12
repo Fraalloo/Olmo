@@ -237,7 +237,7 @@
             </div>
         </main>
 
-        <?php render_footer("ins-button", "#", "Inserisci"); ?>
+        <?php render_footer("ins-button", "../insert/insert_page.php", "Inserisci"); ?>
 
         <!-- Dati da PHP e JS e importazione logica della mappa -->
         <script>

@@ -13,7 +13,7 @@
             <div class="footer-links">
                 <a href="#">Privacy Policy</a>
                 <a href="#">Terms of Service</a>
-                <a href="#">Cookies Settings</a>
+                <a href="https://github.com/Fraalloo/Olmo">GitHub Repository</a>
 
                 <?php if($version !== ""): ?>
                     <p>version <?= htmlspecialchars($version) ?></p>
