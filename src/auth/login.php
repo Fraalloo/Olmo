@@ -72,7 +72,6 @@
     $_SESSION["must_change_password"] = !empty($mustChangePassword);
 
     mysqli_stmt_close($stmt);
-    mysqli_close($conn);
 
     if(!empty($_SESSION["must_change_password"])){
         header("Location: ../pages/profile/profile.php?force_password=1");

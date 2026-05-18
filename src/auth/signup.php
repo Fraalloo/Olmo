@@ -140,7 +140,6 @@
     }
 
     mysqli_stmt_close($stmt);
-    mysqli_close($conn);
 
     $_SESSION["access_mode"] = "login";
     $_SESSION["access_success"] = "Registrazione completata. Ora puoi accedere.";

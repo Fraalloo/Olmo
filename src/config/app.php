@@ -14,8 +14,20 @@
     const UPLOAD_BANNER = "uploads/banner/";  
     const UPLOAD_BANNER_PATH = PROJECT_ROOT.UPLOAD_BANNER;
 
+    const UPLOAD_FILE = "uploads/file/";
+    const UPLOAD_FILE_PATH = PROJECT_ROOT.UPLOAD_FILE;
+
     const MAX_PFP_SIZE = 2 * 1024 * 1024; // 2 MB
+    const MAX_ARTICLE_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
+
     const ALLOWED_PFP_MIME = ["image/jpeg", "image/png", "image/webp"];
+    const ALLOWED_ARTICLE_FILE_MIME = [
+        "application/pdf",
+        "text/plain",
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    ];
 
     if(DEBUG){
         ini_set('display_errors', 1);
