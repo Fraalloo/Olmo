@@ -13,7 +13,7 @@
     background: #a99d8c;
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 4px 20px #ffff;
+    box-shadow: 0 4px 20px #ffffff;
 }
 
 .form-header {
@@ -25,14 +25,14 @@
 
 .form-header h1 {
     font-family: "Vibur", cursive;
-    font-size: 2rem;
-    color: #ffff;
+    font-size: 4rem;
+    color: #ffffff;
     margin-bottom: 8px;
 }
 
 .version-tag {
     font-size: 0.85rem;
-    color: #888;
+    color: #888888;
     font-style: italic;
 }
 
@@ -41,14 +41,14 @@
     padding: 20px;
     border: 1px solid #f0f0f0;
     border-radius: 8px;
-    background-color: #cfc6b7;;
+    background-color: #cfc6b7;
 }
 
 .form-section h3 {
     font-family: "Vibur", cursive;
     margin-bottom: 20px;
     font-size: 1.2rem;
-    color: #ffff;
+    color: #ffffff;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -64,7 +64,7 @@
     display: block;
     font-weight: 600;
     margin-bottom: 8px;
-    color: #555;
+    color: #555555;
     font-size: 0.95rem;
 }
 
@@ -74,11 +74,22 @@
 .form-group textarea {
     width: 100%;
     padding: 12px 15px;
-    border: 1px solid #ddd;
+    border: 1px solid #dddddd;
     border-radius: 6px;
     font-size: 1rem;
     font-family: "Vibur", cursive;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: #f1f1f1;
+    border-radius: 4px;
+    cursor: pointer;
+    box-sizing: border-box;
 }
 
 .form-group input:focus,
@@ -94,23 +105,66 @@
     min-height: 150px;
 }
 
-
-.form-group input[type="file"] {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background: #f1f1f1;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
 .form-group small {
     display: block;
     margin-top: 6px;
-    color: #777;
+    color: #777777;
     font-size: 0.8rem;
 }
 
+.inline-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.inline-field input[type="file"],
+.inline-field input[type="url"] {
+    flex: 1;
+}
+
+.temporary-box {
+    margin-top: 15px;
+    padding: 14px;
+    border: 1px solid #e1d8ca;
+    border-radius: 8px;
+    background-color: #f1eee8;
+}
+
+.temporary-box h4 {
+    margin: 0 0 12px;
+    font-family: "Vibur", cursive;
+    font-size: 1rem;
+    color: #555555;
+}
+
+.temporary-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.temporary-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border: 1px solid #dddddd;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #555555;
+    word-break: break-word;
+}
+
+.temporary-list li:last-child {
+    margin-bottom: 0;
+}
+
+.temporary-list span {
+    flex: 1;
+}
 
 .form-footer-actions {
     display: flex;
@@ -118,12 +172,12 @@
     gap: 15px;
     margin-top: 40px;
     padding-top: 20px;
-    border-top: 2px solid #eee;
+    border-top: 2px solid #eeeeee;
 }
 
 .btn-primary {
     background-color: #28a745;
-    color: white;
+    color: #ffffff;
     padding: 12px 28px;
     border: none;
     border-radius: 6px;
@@ -137,8 +191,8 @@
 }
 
 .btn-secondary {
-    background-color: #6c757d;
-    color: white;
+    background-color: #c0392b;
+    color: #ffffff;
     padding: 12px 28px;
     border: none;
     border-radius: 6px;
@@ -146,23 +200,215 @@
     font-weight: 600;
     text-align: center;
     transition: background 0.3s ease;
+    cursor: pointer;
+    display: inline-block;
+    white-space: nowrap;
 }
 
 .btn-secondary:hover {
     background-color: #5a6268;
 }
 
+.btn-remove-file,
+.btn-remove-link {
+    background-color: #c0392b;
+    color: #ffffff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.3s ease;
+}
+
+.btn-remove-file:hover,
+.btn-remove-link:hover {
+    background-color: #a93226;
+}
+
+.real-file-input {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.btn-add-resource {
+    background-color: #7b5f3f;
+    color: #ffffff;
+    padding: 12px 22px;
+    border: 2px solid #5f472d;
+    border-radius: 999px;
+    font-family: "Vibur", cursive;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-add-resource:hover {
+    background-color: #5f472d;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.22);
+}
+
+.btn-add-resource:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.btn-remove-resource {
+    background-color: #8f2f24;
+    color: #ffffff;
+    padding: 7px 14px;
+    border: 2px solid #6f221a;
+    border-radius: 999px;
+    font-family: "Vibur", cursive;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-remove-resource:hover {
+    background-color: #6f221a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.22);
+}
+
+.btn-remove-resource:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
+}
+
+.resource-row {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+}
+
+.resource-row input[type="file"],
+.resource-row input[type="url"] {
+    flex: 1;
+}
+
+.btn-add-resource {
+    min-width: 170px;
+    background-color: #7b5f3f;
+    color: #ffffff;
+    padding: 12px 22px;
+    border: 2px solid #5f472d;
+    border-radius: 8px;
+    font-family: "Vibur", cursive;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-add-resource:hover {
+    background-color: #5f472d;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.22);
+}
+
+.btn-add-resource:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.btn-remove-resource {
+    background-color: #8f2f24;
+    color: #ffffff;
+    padding: 8px 16px;
+    border: 2px solid #6f221a;
+    border-radius: 8px;
+    font-family: "Vibur", cursive;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-remove-resource:hover {
+    background-color: #6f221a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.22);
+}
+
+.btn-remove-resource:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
+}
+
+.temporary-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #555555;
+    word-break: break-word;
+}
+
+.temporary-list span {
+    flex: 1;
+}
+
+@media (max-width: 600px) {
+    .resource-row {
+        flex-direction: column;
+    }
+
+    .btn-add-resource,
+    .btn-remove-resource {
+        width: 100%;
+    }
+
+    .temporary-list li {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
 
 @media (max-width: 600px) {
     .form-container {
         padding: 20px;
     }
-    
+
+    .inline-field {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .temporary-list li {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
     .form-footer-actions {
         flex-direction: column;
     }
-    
-    .btn-primary, .btn-secondary {
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-remove-file,
+    .btn-remove-link {
         width: 100%;
     }
 }
