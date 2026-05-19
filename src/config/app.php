@@ -1,6 +1,6 @@
 <?php
     const APP_NAME = "Sotto l'Olmo";
-    const CURR_VERS = "v0.1.3";
+    const CURR_VERS = "v0.1.4";
     const DEBUG = true;
 
     const PROJECT_ROOT = __DIR__."/../../";

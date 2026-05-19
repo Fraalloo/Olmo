@@ -196,9 +196,115 @@ const initMultipleLinks = () => {
     })
 }
 
+const initCoordinatePicker = () => {
+    const mapElement = document.getElementById("insert-map")
+    const latInput = document.getElementById("latitudine")
+    const lngInput = document.getElementById("longitudine")
+    const clearButton = document.getElementById("clear-coords")
+    const toggleButton = document.getElementById("toggle-map")
+    const mapPicker = document.getElementById("map-picker")
+
+    if(
+        !mapElement ||
+        !latInput ||
+        !lngInput ||
+        !clearButton ||
+        !toggleButton ||
+        !mapPicker ||
+        typeof L === "undefined"
+    ) return
+
+    const defaultCenter = [41.7066, 15.7270]
+    let map = null
+    let marker = null
+
+    const formatCoordinate = value => Number(value).toFixed(6)
+
+    const initMap = () => {
+        if(map) return
+
+        map = L.map(mapElement).setView(defaultCenter, 13)
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 19,
+            attribution: "&copy; OpenStreetMap contributors"
+        }).addTo(map)
+
+        map.on("click", event => {
+            const {lat, lng} = event.latlng
+
+            setInputs(lat, lng)
+            setMarker(lat, lng)
+        })
+    }
+
+    const refreshMap = () => {
+        initMap()
+        setTimeout(() => map.invalidateSize(), 0)
+    }
+
+    const setMarker = (lat, lng, shouldCenter = false) => {
+        initMap()
+
+        const position = [lat, lng]
+
+        if(marker){
+            marker.setLatLng(position)
+        }else{
+            marker = L.marker(position).addTo(map)
+        }
+
+        if(shouldCenter){
+            map.setView(position, 15)
+        }
+    }
+
+    const setInputs = (lat, lng) => {
+        latInput.value = formatCoordinate(lat)
+        lngInput.value = formatCoordinate(lng)
+    }
+
+    const syncMarkerFromInputs = () => {
+        const lat = Number(latInput.value)
+        const lng = Number(lngInput.value)
+
+        if(latInput.value === "" || lngInput.value === "") return
+        if(!Number.isFinite(lat) || !Number.isFinite(lng)) return
+        if(lat < -90 || lat > 90 || lng < -180 || lng > 180) return
+
+        setMarker(lat, lng, true)
+    }
+
+    latInput.addEventListener("change", syncMarkerFromInputs)
+    lngInput.addEventListener("change", syncMarkerFromInputs)
+
+    toggleButton.addEventListener("click", () => {
+        const isHidden = mapPicker.hidden
+
+        mapPicker.hidden = !isHidden
+        toggleButton.textContent = isHidden ? "Nascondi mappa" : "Mostra mappa"
+        toggleButton.setAttribute("aria-expanded", isHidden ? "true" : "false")
+
+        if(isHidden){
+            refreshMap()
+        }
+    })
+
+    clearButton.addEventListener("click", () => {
+        latInput.value = ""
+        lngInput.value = ""
+
+        if(marker){
+            map.removeLayer(marker)
+            marker = null
+        }
+    })
+}
+
 const initInsertPage = () => {
     initMultipleFiles()
     initMultipleLinks()
+    initCoordinatePicker()
 }
 
 document.addEventListener("DOMContentLoaded", initInsertPage)

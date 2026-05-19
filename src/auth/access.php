@@ -14,6 +14,7 @@
 
     $mode = $_SESSION["access_mode"];
     $isLogin = $mode === "login";
+    $acceptPfpMime = implode(",", ALLOWED_PFP_MIME);
 
     $error = $_SESSION["access_error"] ?? "";
     unset($_SESSION["access_error"]);
@@ -76,7 +77,12 @@
                             <input type="password" id="confirm_password" name="confirm_password" required>
 
                             <label for="profile_photo">Foto profilo (opzionale)</label>
-                            <input type="file" id="profile_photo" name="profile_photo" accept=".jpg,.jpeg,.png,.webp">
+                            <input
+                                type="file"
+                                id="profile_photo"
+                                name="profile_photo"
+                                accept="<?= htmlspecialchars($acceptPfpMime) ?>"
+                            >
                         <?php endif; ?>
 
                         <button type="submit" class="access-submit">

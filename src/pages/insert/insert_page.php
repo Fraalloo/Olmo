@@ -17,7 +17,12 @@
     $username = $_SESSION["username"] ?? "";
 
     $tipi_articolo = extract_article_types($conn);
-    $accept_mime = implode(",", ALLOWED_PFP_MIME);
+    $accept_banner_mime = implode(",", ALLOWED_PFP_MIME);
+    $accept_article_file_mime = implode(",", ALLOWED_ARTICLE_FILE_MIME);
+    $insert_error = $_SESSION["insert_error"] ?? "";
+    $css_version = filemtime(__DIR__ . "/insert_page.css");
+    $js_version = filemtime(__DIR__ . "/insert_page.js");
+    unset($_SESSION["insert_error"]);
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -30,8 +35,20 @@
         <link rel="stylesheet" href="../../../style.css">
         <link rel="stylesheet" href="../home/home.css">
         <link rel="stylesheet" href="../../components/footer/footer.css">
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+            crossorigin=""
+        >
         <link rel="stylesheet" href="insert_page.css">
 
+        <script
+            src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""
+            defer
+        ></script>
         <script src="insert_page.js" defer></script>
     </head>
 
@@ -63,6 +80,12 @@
                     <h1>Inserisci un nuovo articolo</h1>
                 </div>
 
+                <?php if($insert_error !== ""): ?>
+                    <p class="insert-alert insert-alert-error">
+                        <?= esc($insert_error) ?>
+                    </p>
+                <?php endif; ?>
+
                 <form 
                     action="insert.php" 
                     method="POST" 
@@ -82,6 +105,7 @@
                                 type="text" 
                                 id="titolo" 
                                 name="titolo" 
+                                maxlength="100"
                                 required 
                                 placeholder="Inserisci il titolo..."
                             >
@@ -121,6 +145,65 @@
                     <section class="form-section">
                         <h3>
                             <i class="icon"></i>
+                            Coordinate del Luogo
+                        </h3>
+
+                        <div class="coords-grid">
+                            <div class="form-group">
+                                <label for="latitudine">Latitudine</label>
+                                <input
+                                    type="number"
+                                    id="latitudine"
+                                    name="latitudine"
+                                    min="-90"
+                                    max="90"
+                                    step="0.000001"
+                                    placeholder="41.706600"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="longitudine">Longitudine</label>
+                                <input
+                                    type="number"
+                                    id="longitudine"
+                                    name="longitudine"
+                                    min="-180"
+                                    max="180"
+                                    step="0.000001"
+                                    placeholder="15.727000"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="coords-actions">
+                            <button
+                                type="button"
+                                class="btn-secondary btn-toggle-map"
+                                id="toggle-map"
+                                aria-expanded="false"
+                                aria-controls="map-picker"
+                            >
+                                Mostra mappa
+                            </button>
+
+                            <button
+                                type="button"
+                                class="btn-secondary btn-clear-coords"
+                                id="clear-coords"
+                            >
+                                Rimuovi coordinate
+                            </button>
+                        </div>
+
+                        <div class="map-picker" id="map-picker" hidden>
+                            <div id="insert-map"></div>
+                        </div>
+                    </section>
+
+                    <section class="form-section">
+                        <h3>
+                            <i class="icon"></i>
                             Media e Allegati
                         </h3>
 
@@ -131,7 +214,7 @@
                                 type="file" 
                                 id="banner" 
                                 name="banner" 
-                                accept="<?= esc($accept_mime) ?>"
+                                accept="<?= esc($accept_banner_mime) ?>"
                             >
 
                             <small>
@@ -146,6 +229,7 @@
                                 <input 
                                     type="file" 
                                     id="allegato_picker"
+                                    accept="<?= esc($accept_article_file_mime) ?>"
                                     multiple
                                 >
 
@@ -162,6 +246,7 @@
                                 type="file" 
                                 id="allegati" 
                                 name="allegati[]" 
+                                accept="<?= esc($accept_article_file_mime) ?>"
                                 multiple
                                 style="display: none;"
                             >
