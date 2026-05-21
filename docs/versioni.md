@@ -51,3 +51,19 @@ Sono state aggiornate anche le risorse di test:
 È stato aggiornato lo script di inizializzazione per permettere l'import opzionale dei record di test.
 
 È stato aggiunto il documento `inserimento.md` per descrivere il flusso di creazione degli articoli.
+
+**Versione v0.1.5**
+
+Data 21/05/2026
+
+Versione comprendente l'implementazione della modifica degli articoli, con:
+
+- pagina `pages/edit` coerente con la struttura di `pages/insert`;
+- form precompilato con dati, coordinate, banner, file e link della versione attiva;
+- mantenimento o rimozione dei file esistenti tramite checkbox;
+- mantenimento o rimozione dei link esistenti tramite checkbox;
+- possibilità di caricare nuovi allegati e aggiungere nuovi link;
+- creazione di una nuova versione in attesa di convalida, senza modificare direttamente la versione pubblicata;
+- creazione dei nuovi record in `file_articoli` e `link_articoli` per la versione proposta.
+
+Sono state aggiornate anche la pagina dettaglio articolo, la documentazione di inserimento/modifica, la documentazione database e la documentazione admin.

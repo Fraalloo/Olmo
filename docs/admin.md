@@ -2,7 +2,7 @@
 
 ## Descrizione generale
 
-Nel progetto **Sotto l’Olmo** gli amministratori hanno privilegi superiori rispetto agli utenti normali. Un utente normale può proporre nuovi articoli, mentre l’admin ha il compito di convalidare, rifiutare, nascondere, ripristinare e gestire i contenuti pubblicati.
+Nel progetto **Sotto l’Olmo** gli amministratori hanno privilegi superiori rispetto agli utenti normali. Un utente normale può proporre nuovi articoli e modifiche ad articoli esistenti, mentre l’admin ha il compito di convalidare, rifiutare, nascondere, ripristinare e gestire i contenuti pubblicati.
 
 L’admin può inoltre accedere a una dashboard dedicata per consultare statistiche generali del sistema e gestire i ruoli degli utenti, compresa la promozione di utenti normali ad amministratori.
 
@@ -30,7 +30,7 @@ L’admin di base `DBAdmin` viene creato con `must_change_password = 1`, così a
 
 ## Convalida dei contenuti
 
-Gli articoli proposti dagli utenti vengono salvati come versioni non approvate:
+Gli articoli proposti dagli utenti e le modifiche ad articoli esistenti vengono salvati come versioni non approvate:
 
 - `id_admin IS NULL`
 - `is_active = 0`
@@ -44,11 +44,13 @@ Da questa pagina l’admin può:
 - approvare/convalidare l’articolo;
 - rifiutare l’articolo.
 
-Se un articolo viene approvato, viene valorizzato `id_admin` con l’id dell’admin che ha eseguito l’azione. Se viene rifiutato, la proposta viene eliminata fisicamente dal database, perché non è mai entrata nello storico approvato.
+Se una proposta viene approvata, viene valorizzato `id_admin` con l’id dell’admin che ha eseguito l’azione e la versione diventa attiva. Se viene rifiutata, la proposta viene eliminata fisicamente dal database, perché non è mai entrata nello storico approvato.
 
 ## Gestione versioni e storico
 
 Gli articoli sono raggruppati tramite `id_gruppo_articolo`. Ogni gruppo rappresenta un articolo logico, mentre le righe nella tabella `articoli` rappresentano le sue versioni.
+
+La pagina di modifica crea una nuova versione nello stesso gruppo dell'articolo sorgente. La versione pubblicata resta visibile fino all'eventuale approvazione della modifica.
 
 La versione attiva è indicata da `is_active = 1`. Una sola versione per gruppo deve essere considerata attiva.
 

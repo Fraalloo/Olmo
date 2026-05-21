@@ -12,6 +12,8 @@ Le tipologie di articolo previste sono:
 
 Gli articoli usano un sistema di versioning: `gruppi_articoli` rappresenta l'articolo logico, mentre `articoli` contiene le singole versioni.
 
+L'inserimento crea un nuovo gruppo con versione `1`. La modifica di un articolo approvato crea invece una nuova riga in `articoli` nello stesso gruppo, con numero versione successivo e stato in attesa di convalida.
+
 ## Tabelle
 
 ### utenti
@@ -100,6 +102,8 @@ Contiene i file allegati agli articoli.
 
 Il file fisico viene salvato con un nome generato tramite `uniqid()`, mentre `nome_originale` conserva il nome scelto dall'utente.
 
+Durante una modifica, un file mantenuto viene collegato alla nuova versione con un nuovo record in `file_articoli`. Il campo `file_path` può quindi essere condiviso da più versioni dello stesso articolo.
+
 ### link_articoli
 
 Contiene direttamente i link associati agli articoli. La vecchia tabella separata `link` è stata rimossa.
@@ -109,6 +113,8 @@ Contiene direttamente i link associati agli articoli. La vecchia tabella separat
 | `id_link_articolo` | `INT` | PK, AUTO_INCREMENT | Identificativo link |
 | `id_articolo` | `INT` | FK, indice | Versione articolo collegata |
 | `url_link` | `VARCHAR(255)` | NOT NULL | URL di approfondimento |
+
+Ogni versione ha i propri record in `link_articoli`. In modifica, i link mantenuti e quelli nuovi vengono salvati come record collegati alla nuova versione.
 
 ## Relazioni
 

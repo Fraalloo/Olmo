@@ -249,6 +249,7 @@
             SELECT
                 a.id_articolo,
                 a.id_gruppo_articolo,
+                a.id_tipo_articolo,
                 a.banner,
                 a.titolo,
                 a.descrizione,
@@ -316,7 +317,7 @@
 
     function extract_article_files($conn, $articleId){
         $query = "
-            SELECT nome_originale, file_path, mime_type, data_upload
+            SELECT id_file, nome_originale, file_path, mime_type, data_upload
             FROM file_articoli
             WHERE id_articolo = ?
             ORDER BY data_upload DESC

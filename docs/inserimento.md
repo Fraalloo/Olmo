@@ -1,4 +1,4 @@
-# Inserimento Articoli
+# Inserimento E Modifica Articoli
 
 ## Descrizione Generale
 
@@ -11,7 +11,16 @@ src/pages/insert/insert.php
 src/pages/insert/insert_page.css
 ```
 
-La pagina è accessibile solo agli utenti autenticati. Se l'utente deve cambiare password, viene reindirizzato al profilo prima di poter inserire contenuti.
+La modifica di un articolo esistente è gestita dai file:
+
+```text
+src/pages/edit/edit_page.php
+src/pages/edit/edit_page.js
+src/pages/edit/edit.php
+src/pages/edit/edit_page.css
+```
+
+Le pagine sono accessibili solo agli utenti autenticati. Se l'utente deve cambiare password, viene reindirizzato al profilo prima di poter proporre contenuti.
 
 ## Form Di Inserimento
 
@@ -27,6 +36,28 @@ La pagina è accessibile solo agli utenti autenticati. Se l'utente deve cambiare
 - link multipli.
 
 I tipi articolo vengono letti dalla tabella `tipi_articoli`.
+
+## Form Di Modifica
+
+`edit_page.php` mostra un form con la stessa struttura della pagina di inserimento, ma precompilato con i dati della versione attiva dell'articolo:
+
+- titolo;
+- tipo articolo;
+- descrizione;
+- coordinate;
+- banner;
+- file allegati;
+- link.
+
+La pagina è raggiungibile dal pulsante `Modifica` nel dettaglio articolo.
+
+La modifica è permessa solo per articoli:
+
+- approvati;
+- attivi;
+- non hidden.
+
+L'invio non modifica direttamente la versione pubblicata. Viene invece creata una nuova versione nello stesso `id_gruppo_articolo`, in attesa di convalida admin.
 
 ## Coordinate
 
@@ -75,6 +106,15 @@ Il nome fisico viene generato tramite `uniqid()` con prefisso:
 
 Per gli allegati viene salvato anche il nome originale nel campo `nome_originale`.
 
+In modifica:
+
+- il banner attuale può essere mantenuto, rimosso o sostituito;
+- i file già associati possono essere mantenuti tramite checkbox;
+- i nuovi allegati vengono caricati come nell'inserimento;
+- i file mantenuti generano nuovi record in `file_articoli` collegati alla nuova versione, ma possono puntare allo stesso file fisico della versione precedente;
+- i link già associati possono essere mantenuti tramite checkbox;
+- i nuovi link vengono aggiunti alla lista della nuova versione.
+
 ## Validazione Server-Side
 
 `insert.php` controlla:
@@ -90,6 +130,8 @@ Per gli allegati viene salvato anche il nome originale nel campo `nome_originale
 - MIME reale dei file;
 - scrivibilità delle directory upload.
 
+`edit.php` applica gli stessi controlli sui dati modificati e verifica anche che l'articolo sorgente sia modificabile.
+
 ## Transazione
 
 L'inserimento avviene in una transazione MySQL:
@@ -104,6 +146,20 @@ L'inserimento avviene in una transazione MySQL:
 
 In caso di errore viene eseguito il rollback e i file già creati durante il tentativo vengono eliminati.
 
+La modifica avviene a sua volta in transazione:
+
+1. verifica dell'articolo sorgente;
+2. verifica del tipo articolo;
+3. eventuale salvataggio del nuovo banner;
+4. calcolo della prossima versione con `MAX(versione) + 1`;
+5. creazione della nuova riga in `articoli`;
+6. copia dei record dei file mantenuti;
+7. salvataggio dei nuovi allegati;
+8. salvataggio dei link mantenuti e dei nuovi link;
+9. commit finale.
+
+In caso di errore viene eseguito il rollback e vengono eliminati solo i file fisici creati durante quel tentativo.
+
 ## Stato Del Nuovo Articolo
 
 Un articolo appena inserito da un utente viene salvato come proposta in attesa:
@@ -116,3 +172,17 @@ versione = 1
 ```
 
 Dopo l'approvazione da parte di un admin, la versione può diventare attiva.
+
+## Stato Di Una Modifica
+
+Una modifica proposta viene salvata come nuova versione dello stesso gruppo articolo:
+
+```sql
+id_gruppo_articolo = gruppo della versione sorgente
+versione = MAX(versione) + 1
+id_admin = NULL
+is_active = 0
+is_hidden = 0
+```
+
+Fino alla convalida, la versione attiva precedente resta visibile in Home e nel dettaglio pubblico.

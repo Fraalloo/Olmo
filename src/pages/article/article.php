@@ -109,7 +109,7 @@
 
                         <div class="article-actions">
                             <?php if((int)$articolo["is_active"] === 1 && empty($articolo["is_hidden"]) && !empty($articolo["id_admin"])): ?>
-                                <a class="btn-edit" href="#">
+                                <a class="btn-edit" href="../edit/edit_page.php?id=<?= (int)$articolo["id_articolo"] ?>">
                                     Modifica
                                 </a>
                             <?php endif; ?>

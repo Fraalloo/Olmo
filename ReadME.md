@@ -93,6 +93,7 @@ Per usare i file di test nell'applicazione, copiare o spostare `test/uploads` ne
 - dettaglio articolo con versioni, file, link, coordinate e meteo;
 - convalida, rifiuto, hide e restore dei contenuti;
 - dashboard admin con statistiche e gestione ruoli.
+- modifica articoli tramite nuove versioni da convalidare.
 
 ## 🖼️ Anteprima Interfaccia
 
