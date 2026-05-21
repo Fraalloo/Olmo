@@ -2,7 +2,7 @@
 
 ## Descrizione generale
 
-Nel progetto **Sotto l’Olmo** gli amministratori hanno privilegi superiori rispetto agli utenti normali. Un utente normale può proporre nuovi articoli o modifiche, mentre l’admin ha il compito di convalidare, rifiutare, nascondere, ripristinare e gestire i contenuti pubblicati.
+Nel progetto **Sotto l’Olmo** gli amministratori hanno privilegi superiori rispetto agli utenti normali. Un utente normale può proporre nuovi articoli, mentre l’admin ha il compito di convalidare, rifiutare, nascondere, ripristinare e gestire i contenuti pubblicati.
 
 L’admin può inoltre accedere a una dashboard dedicata per consultare statistiche generali del sistema e gestire i ruoli degli utenti, compresa la promozione di utenti normali ad amministratori.
 
@@ -26,7 +26,7 @@ Questo campo indica se l’utente deve cambiare obbligatoriamente la password pr
 - `must_change_password = 1`: cambio password richiesto.
 - `must_change_password = 0`: accesso normale consentito.
 
-L’admin di base `DBAdmin` viene creato con `must_change_password = 1`, così al primo accesso viene reindirizzato alla pagina profilo/modifica profilo per impostare una nuova password.
+L’admin di base `DBAdmin` viene creato con `must_change_password = 1`, così al primo accesso viene reindirizzato alle pagine `profile.php` e `modifica_profile.php` per impostare una nuova password.
 
 ## Convalida dei contenuti
 

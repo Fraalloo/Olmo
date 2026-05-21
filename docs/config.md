@@ -1,27 +1,70 @@
-**DOCUMENTAZIONE DEI FILE DI CONFIGURAZIONE**
+# Configurazione
 
-Il sistema di configurazione del progetto Sotto l’Olmo ha lo scopo di centralizzare i parametri fondamentali dell’applicazione, così da evitare valori scritti direttamente nei file operativi, ridondanze e rendere più semplice la manutenzione del software.
+## Descrizione Generale
 
-**app.php**
+La configurazione centralizza costanti applicative, percorsi e parametri di connessione al database.
 
-Il file app.php contiene le costanti applicative condivise, cioè i valori che definiscono il comportamento generale del sistema.
+I file principali sono:
 
-Tra questi rientrano il nome dell’applicazione, il percorso dell’immagine profilo predefinita, la dimensione massima consentita per il caricamento della foto profilo e l’elenco dei formati MIME ammessi.
+```text
+src/config/app.php
+src/config/config.php
+src/config/config.prod.php
+src/config/config.test.php
+```
 
-Questo file viene usato soprattutto dal sistema di accessi e dalla gestione delle immagini, in modo da garantire coerenza tra interfaccia, logica applicativa e controlli lato server.
+## app.php
 
-**config.php**
+`app.php` contiene costanti condivise dall'applicazione.
 
-Il file config.php ha il compito di caricare la configurazione adatta all’ambiente corrente. In particolare, il progetto prevede un meccanismo per importare config.prod.php se presente, altrimenti config.test.php.
+Costanti generali:
 
-In questo modo è possibile distinguere un ambiente di produzione da uno di test senza modificare il codice delle pagine principali.
+- `APP_NAME`
+- `CURR_VERS`
+- `DEBUG`
+- `PROJECT_ROOT`
 
-Questa scelta rende il progetto più ordinato e permette di cambiare credenziali o impostazioni tecniche senza intervenire direttamente sulla logica del sito.
+Foto profilo:
 
-**config.\*.php**
+- `DEFAULT_PFP`
+- `DEFAULT_PFP_PATH`
+- `UPLOAD_PFP`
+- `UPLOAD_PFP_PATH`
+- `MAX_PFP_SIZE`
+- `ALLOWED_PFP_MIME`
 
-Il file config.prod.php contiene i parametri da usare in ambiente reale, mentre config.test.php contiene quelli destinati allo sviluppo locale o alle prove.
+Banner articoli:
 
-In entrambi i casi, i file possono includere i dati di connessione al DBMS, come host, nome del database, utente e password, oltre ad altre impostazioni specifiche dell’installazione.
+- `UPLOAD_BANNER`
+- `UPLOAD_BANNER_PATH`
 
-Il loro impiego separato consente di lavorare in sicurezza, evitando di mescolare configurazioni di sviluppo e configurazioni operative.
+File allegati agli articoli:
+
+- `UPLOAD_FILE`
+- `UPLOAD_FILE_PATH`
+- `MAX_ARTICLE_FILE_SIZE`
+- `ALLOWED_ARTICLE_FILE_MIME`
+
+I MIME ammessi per profilo e banner sono JPG, PNG e WEBP. Gli allegati articolo accettano PDF, TXT, JPG, PNG e WEBP.
+
+Se `DEBUG` è attivo, PHP mostra errori e warning.
+
+## config.php
+
+`config.php` sceglie quale configurazione database caricare:
+
+1. se esiste `config.prod.php`, usa quella;
+2. altrimenti usa `config.test.php`.
+
+Poi apre la connessione MySQLi e rende disponibile `$conn`.
+
+## config.prod.php E config.test.php
+
+Questi file contengono i parametri di connessione:
+
+- host;
+- utente;
+- password;
+- nome database.
+
+La separazione permette di usare credenziali diverse tra ambiente locale, test e produzione senza modificare la logica delle pagine.

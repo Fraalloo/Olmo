@@ -1,51 +1,105 @@
-**DOCUMENTAZIONE DEI FILE DI AUTENTICAZIONE**
+# Autenticazione
 
-Il sistema di accessi del progetto Sotto l’Olmo gestisce l’ingresso degli utenti nel sito, la registrazione di nuovi account, il mantenimento della sessione e l’uscita dal sistema. Questo modulo costituisce il punto di ingresso all’area riservata e si integra con la struttura del database e con il flusso generale previsto dal prototipo.
+## Descrizione Generale
 
-Il sistema di accessi è strettamente collegato alla distinzione tra utenti normali e amministratori prevista dal progetto.
+Il sistema di autenticazione gestisce:
 
-L’utente normale può proporre nuovi contenuti e modifiche, ma le sue azioni devono essere convalidate da un admin. L’amministratore, invece, dispone di privilegi aggiuntivi, tra cui creazione, modifica, eliminazione e convalida dei contenuti. Questa differenza di ruolo influisce direttamente sulla visibilità di alcuni comandi nell’interfaccia e sul comportamento delle pagine successive all’accesso, come home.php, luogo.php e convalida.php.
+- accesso;
+- registrazione;
+- sessione utente;
+- logout;
+- distinzione tra utenti normali e admin;
+- obbligo di cambio password per account temporanei.
 
-**index.php**
+I file principali sono:
 
-Dal punto di vista funzionale, la landing page (index.php) rappresenta la prima schermata visibile all’utente e consente di scegliere se effettuare il login, registrarsi oppure accedere direttamente alla Home nel caso in cui la sessione sia già attiva.
+```text
+src/auth/access.php
+src/auth/login.php
+src/auth/signup.php
+src/auth/logout.php
+src/utils/auth_guard.php
+```
 
-**access.php**
+## Landing Page
 
-La pagina centrale del sistema di accessi è access.php, che contiene la parte grafica comune sia al login sia alla registrazione.
+`index.php` è la prima pagina visibile all'utente e consente di accedere, registrarsi o proseguire verso la Home se la sessione è già attiva.
 
-La modalità visualizzata viene stabilita tramite una variabile di sessione, che di default assume il valore login. In questo modo si evita di duplicare la struttura HTML e CSS delle due schermate, mantenendo un’unica pagina capace di alternare i due form in base al contesto. I file login.php e signup.php contengono invece solo la logica server-side e le query necessarie per interagire con il database.
+## access.php
 
-**login.php**
+`access.php` contiene il layout comune per login e registrazione.
 
-Il login consente a un utente già registrato di autenticarsi mediante nome utente e password.
+La modalità visualizzata viene gestita tramite `$_SESSION["access_mode"]` e tramite il parametro `mode` in query string.
 
-Il sistema cerca nel database il record corrispondente nella tabella utenti, recupera l’hash della password e verifica la corrispondenza con il valore inserito nel form.
+## login.php
 
-Se i dati sono corretti, vengono salvate in sessione le informazioni principali dell’utente, come identificativo, nome utente, eventuale ruolo amministrativo e immagine profilo.
+Il login:
 
-Se invece le credenziali non risultano valide, il sistema restituisce un messaggio di errore e riporta l’utente alla pagina di accesso.
+1. riceve nome utente e password;
+2. cerca l'utente nella tabella `utenti`;
+3. verifica la password con `password_verify()`;
+4. salva in sessione:
+   - `user_id`;
+   - `username`;
+   - `is_admin`;
+   - `pfp`;
+   - `must_change_password`;
+5. reindirizza alla Home o al profilo se il cambio password è obbligatorio.
 
-La presenza nel database del campo password_hash conferma che le password non vengono memorizzate in chiaro, ma in forma hashata.
+Se l'utente non ha una foto profilo personale, in sessione viene usato `DEFAULT_PFP`.
 
-**signup.php**
+## signup.php
 
-La registrazione permette di creare un nuovo account come utente normale. In coerenza con la documentazione del database, il campo is_admin ha valore predefinito pari a 0, quindi l’assegnazione dei privilegi amministrativi non avviene tramite form pubblico ma resta a carico del DBA o di amministratori già esistenti. Inoltre, il nome utente deve rispettare il vincolo di lunghezza maggiore di tre caratteri, mentre la foto profilo è facoltativa, perché il campo pfp può essere nullo e, in assenza di immagine caricata, il sistema utilizza un’icona predefinita. Queste scelte riflettono le rettifiche introdotte nella documentazione e nella struttura della tabella utenti.
+La registrazione crea sempre utenti normali. Il campo `is_admin` resta al valore di default `0`.
 
-Durante la registrazione, l’utente inserisce nome utente, password, conferma password ed eventualmente una foto profilo. Il sistema verifica che i campi obbligatori siano stati compilati, controlla che le due password coincidano, verifica che il nome utente non sia già presente nel database e, se viene caricata un’immagine, controlla dimensione massima e tipo MIME consentito. In caso di esito positivo, la password viene trasformata in hash e il nuovo utente viene salvato nel database. Se non viene caricata alcuna immagine, viene assegnato il percorso della foto profilo di default.
+Il form richiede:
 
-**logout.php**
+- nome utente;
+- password;
+- conferma password;
+- foto profilo opzionale.
 
-Il logout viene gestito da un file dedicato, logout.php, che ha il compito di svuotare la sessione, distruggerla e reindirizzare l’utente verso la landing page. In questo modo si conclude la sessione autenticata e il sistema torna allo stato iniziale.
+I controlli principali sono:
 
-**Gestione admin**
+- campi obbligatori;
+- nome utente più lungo di tre caratteri;
+- password e conferma coincidenti;
+- nome utente non già esistente;
+- dimensione massima della foto profilo;
+- MIME reale della foto profilo;
+- salvataggio nella cartella `uploads/pfp/`.
 
-Gli admin sono gestiti da altri admin o dal DBA.
+La password viene salvata come hash tramite `password_hash()`.
 
-Di base, ogni utente creato non sarà admin (is_admin = 0), ma un altro admin potrà renderlo tale.
+Se il caricamento della foto profilo riesce ma l'inserimento nel database fallisce, il file appena creato viene eliminato per evitare file orfani.
 
-Il primo admin, DBAdmin, avrà come password 123!OlmoOlmo!321, il cui hash è:
+## logout.php
 
-\$2y\$12\$MFMnmfE16pJ8b5w30SLBoepi3T4BRhTjhvK.gTEyutNqKr9C/XuVS
+`logout.php` svuota la sessione, la distrugge e reindirizza l'utente alla landing page.
 
-Sarà subito richiesto il cambio password al primo accesso di DBAdmin.
+## Ruoli
+
+Il ruolo dipende dal campo `is_admin`:
+
+- `0`: utente normale;
+- `1`: amministratore.
+
+Gli utenti normali possono proporre contenuti. Gli admin possono convalidare, rifiutare, nascondere, ripristinare contenuti e gestire ruoli utente dalla dashboard.
+
+## Admin Iniziale
+
+Lo schema crea l'utente `DBAdmin` con `id_utente = 1`, ruolo admin e `must_change_password = 1`.
+
+Password iniziale:
+
+```text
+123!OlmoOlmo!321
+```
+
+Hash salvato nello schema:
+
+```text
+$2y$12$MFMnmfE16pJ8b5w30SLBoepi3T4BRhTjhvK.gTEyutNqKr9C/XuVS
+```
+
+Al primo accesso è richiesto il cambio password.

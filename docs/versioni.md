@@ -32,5 +32,22 @@ Versione comprendente l’implementazione della pagina dell’articolo, le funzi
 
 Data 19/05/2026
 
-Versione comprendente l'implementazione delle pagine di inserimento e modifica degli articoli.
-Inoltre, sono state aggiornate le risorse di test, cioè: record, banner, file e pfp.
+Versione comprendente l'implementazione della pagina di inserimento articoli, con:
+
+- titolo, tipo e descrizione;
+- banner opzionale;
+- allegati multipli;
+- link multipli;
+- coordinate manuali;
+- selezione coordinate tramite mappa Leaflet;
+- validazione server-side di campi, link, coordinate e upload.
+
+Sono state aggiornate anche le risorse di test:
+
+- record SQL in `test/db`;
+- file fisici in `test/uploads`;
+- banner, allegati e foto profilo con nomi generati secondo la logica applicativa.
+
+È stato aggiornato lo script di inizializzazione per permettere l'import opzionale dei record di test.
+
+È stato aggiunto il documento `inserimento.md` per descrivere il flusso di creazione degli articoli.
