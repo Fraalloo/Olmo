@@ -84,11 +84,11 @@ INSERT INTO articoli(
 -- Gruppo 126: testimonianza pendente senza admin
 (126,3,112,NULL,NULL,'Racconto del mercato','Testimonianza nuova in attesa di approvazione.',NULL,NULL,'2024-09-14',1,0,0),
 
--- Gruppo 127: luogo con coordinate al limite valido
-(127,1,113,1,NULL,'Coordinate limite nord','Luogo tecnico per test latitudine massima.',90.000000,15.000000,'2024-05-25',1,1,0),
+-- Gruppo 127: luogo con coordinate nel limite nord dell'area locale
+(127,1,113,1,NULL,'Belvedere nord','Luogo tecnico per test coordinate nella parte nord dell''area locale.',41.718000,15.744000,'2024-05-25',1,1,0),
 
--- Gruppo 128: luogo con coordinate al limite valido negativo
-(128,1,114,1,NULL,'Coordinate limite sud ovest','Luogo tecnico per test coordinate negative.',-90.000000,-180.000000,'2024-05-26',1,1,0),
+-- Gruppo 128: luogo con coordinate nel limite sud ovest dell'area locale
+(128,1,114,1,NULL,'Ingresso sud ovest','Luogo tecnico per test coordinate nella parte sud ovest dell''area locale.',41.699000,15.719000,'2024-05-26',1,1,0),
 
 -- Gruppo 129: testimonianza attiva nascosta
 (129,3,115,1,NULL,'Testimonianza da revisionare','Testimonianza approvata ma nascosta.',NULL,NULL,'2024-06-01',1,1,1);

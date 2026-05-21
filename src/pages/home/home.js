@@ -30,20 +30,29 @@ const buildPopupContent = item => {
 
 const initMarkers = () => {
     window.mapArticles.forEach(item => {
-        if(item.latitudine !== null && item.longitudine !== null){
-            const marker = L.marker([item.latitudine, item.longitudine])
+        const lat = Number(item.latitudine)
+        const lng = Number(item.longitudine)
+
+        if(Number.isFinite(lat) && Number.isFinite(lng)){
+            const position = [lat, lng]
+            const marker = L.marker(position)
                 .addTo(markersLayer)
                 .bindPopup(buildPopupContent(item))
 
             articleMarkers.set(item.id_articolo, marker)
-            bounds.push([item.latitudine, item.longitudine])
+            bounds.push(position)
         }
     })
 }
 
 const zoomToMarkers = () => {
-    if(bounds.length > 0){
-        map.fitBounds(bounds, {padding: [40, 40]})
+    if(bounds.length === 1){
+        map.setView(bounds[0], 14)
+    } else if(bounds.length > 1){
+        map.fitBounds(bounds, {
+            padding: [40, 40],
+            maxZoom: 15
+        })
     }
 }
 

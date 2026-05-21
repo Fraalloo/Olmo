@@ -58,7 +58,7 @@
     if($filtersOpen) $queryExtra .= "&filters_open=1";
 
     $articoli = extract_articles($conn, $limit, $page, $showOnlyMine, $userId, $filters);
-    $mapArticles = extract_map_articles($conn, $showOnlyMine, $userId, $search);
+    $mapArticles = extract_map_articles($conn, $showOnlyMine, $userId, $filters);
 
     $totalArticles = count_active_articles($conn, $showOnlyMine, $userId, $filters);
     $totalPages = max(1, (int)ceil($totalArticles / $limit));
@@ -127,7 +127,7 @@
                 </div>
 
                 <div class="hero-actions">
-                    <button class="btn-map" id="zoomToMarkersBtn">Centra tutti i luoghi</button>
+                    <button class="btn-map" id="zoomToMarkersBtn">Centra tutti gli articoli in mappa</button>
 
                     <?php if($showOnlyMine): ?>
                         <a class="btn-toggle" href="home.php">Mostra tutti gli articoli</a>

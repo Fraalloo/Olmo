@@ -59,7 +59,7 @@
         return $articoli;
     }
 
-    function extract_map_articles($conn, $onlyMine = false, $userId = null, $search = ""){
+    function extract_map_articles($conn, $onlyMine = false, $userId = null, $filters = []){
         $query = "
             SELECT
                 a.id_articolo,
@@ -68,22 +68,22 @@
                 a.latitudine,
                 a.longitudine,
                 t.descrizione AS tipo_articolo
-            FROM articoli a, tipi_articoli t
+            FROM articoli a, tipi_articoli t, utenti u
             WHERE
                 a.id_tipo_articolo = t.id_tipo_articolo AND
+                a.id_pubblicatore = u.id_utente AND
                 a.is_active = 1 AND
                 a.is_hidden = 0 AND
                 a.id_admin IS NOT NULL AND
                 a.latitudine IS NOT NULL AND
-                a.longitudine IS NOT NULL AND
-                t.descrizione = 'luogo'
+                a.longitudine IS NOT NULL
         ";
 
         $params = [];
         $types = "";
 
         addOnlyMineFilter($query, $types, $params, $onlyMine, $userId);
-        addSearchFilter($query, $types, $params, $search);
+        addAdvancedFilters($query, $types, $params, $filters);
 
         $query .= " ORDER BY a.data_pubblicazione DESC";
 
