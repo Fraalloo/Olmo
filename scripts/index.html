@@ -33,7 +33,15 @@
                 <div class="hero-inner">
                     <h1 class="title-i">Script di inizializzazione</h1>
                     <p class="subtitle">Premi il pulsante per inizializzare il DataBase e i suoi dati.</p>
-                    <a href="./install.php" class="cta">Inizializza</a>
+
+                    <form action="./install.php" method="POST" class="install-form">
+                        <label class="seed-option">
+                            <input type="checkbox" name="include_test_records" value="1">
+                            <span>Includi anche i record di test da <code>test/db</code></span>
+                        </label>
+
+                        <button type="submit" class="cta">Inizializza</button>
+                    </form>
                 </div>
             </main>
 

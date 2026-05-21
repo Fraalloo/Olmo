@@ -1,0 +1,7 @@
+Per «sicurezza informatica» si intende quel
+ramo dell'informatica che si occupa della
+protezione dei sistemi informatici in termini di
+disponibilità, confidenzialità, integrità ed
+autenticità dei beni informatici. A questi tre
+parametri si tende attualmente ad aggiungere
+l'autenticità delle informazioni.

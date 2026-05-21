@@ -58,7 +58,7 @@ Da qui è possibile:
 Per testare rapidamente il sistema è disponibile la directory "test/".
 
 Database:
-- test/db/ contiene file SQL da importare manualmente nel DBMS
+- test/db/ contiene file SQL da importare manualmente o automaticamente nel DBMS
   per creare utenti e articoli di esempio
 - I dati riguardanti gli utenti (es. password) sono tutti commentati nei file
 

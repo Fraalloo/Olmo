@@ -27,3 +27,10 @@ Data 04/05/2026
 Versione comprendente l’implementazione della pagina dell’articolo, le funzionalità da admin e la gestione del proprio profilo.
 
 È stato fatto un cambiamento al DB schema, descritto nella rettifica della versione 0.1.3.
+
+**Versione v0.1.4**
+
+Data 19/05/2026
+
+Versione comprendente l'implementazione delle pagine di inserimento e modifica degli articoli.
+Inoltre, sono state aggiornate le risorse di test, cioè: record, banner, file e pfp.

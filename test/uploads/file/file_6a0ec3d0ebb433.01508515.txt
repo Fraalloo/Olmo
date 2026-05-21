@@ -1,0 +1,4 @@
+Il rischio è un concetto probabilistico, è la probabilità che accada un
+certo evento capace di causare un danno alle persone. La nozione di
+rischio implica l’esistenza di una sorgente di pericolo e delle possibilità
+che essa si trasformi in un danno.
