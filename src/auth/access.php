@@ -18,6 +18,11 @@
 
     $error = $_SESSION["access_error"] ?? "";
     unset($_SESSION["access_error"]);
+
+    $notice = "";
+    if(isset($_GET["timeout"]) && $_GET["timeout"] === "1"){
+        $notice = "Sessione scaduta per inattività. Effettua di nuovo l'accesso.";
+    }
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -52,6 +57,10 @@
 
                     <?php if($error): ?>
                         <p class="access-error"><?= htmlspecialchars($error) ?></p>
+                    <?php endif; ?>
+
+                    <?php if($notice): ?>
+                        <p class="access-notice"><?= htmlspecialchars($notice) ?></p>
                     <?php endif; ?>
 
                     <form

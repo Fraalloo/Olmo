@@ -70,6 +70,7 @@
     $_SESSION["is_admin"] = !empty($isAdmin);
     $_SESSION["pfp"] = !empty($pfp) ? $pfp : DEFAULT_PFP;
     $_SESSION["must_change_password"] = !empty($mustChangePassword);
+    $_SESSION["last_activity"] = time();
 
     mysqli_stmt_close($stmt);
 

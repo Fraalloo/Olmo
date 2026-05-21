@@ -1,9 +1,25 @@
 <?php
+    function check_session_timeout($timeout_seconds = 1800){
+        $lastActivity = $_SESSION["last_activity"] ?? null;
+
+        if($lastActivity !== null && time() - (int)$lastActivity > $timeout_seconds){
+            session_unset();
+            session_destroy();
+
+            header("Location: ../../auth/access.php?mode=login&timeout=1");
+            exit;
+        }
+
+        $_SESSION["last_activity"] = time();
+    }
+
     function require_login(){
         if(!isset($_SESSION["user_id"])){
             header("Location: ../../../index.php");
             exit;
         }
+
+        check_session_timeout();
     }
 
     function require_password_change_if_needed($profilePath){

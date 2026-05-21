@@ -48,6 +48,16 @@
     text-align: center;
 }
 
+.access-notice {
+    margin-bottom: 16px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.72);
+    color: #23385f;
+    font-size: 14px;
+    text-align: center;
+}
+
 .access-form {
     display: flex;
     flex-direction: column;
