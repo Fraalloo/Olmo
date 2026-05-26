@@ -21,6 +21,6 @@ jobs:
       - name: Lint Markdown files
         run: |
           npx markdownlint-cli2 \
-            --config ".github/config/markdownlint-cli2.jsonc" \
+            --config ".github/config/.markdownlint-cli2.jsonc" \
             "ReadME.md" \
             "docs/**/*.md"
