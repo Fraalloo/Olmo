@@ -1,4 +1,4 @@
-**IDEA PROGETTO**
+# IDEA PROGETTO
 
 Gruppo:
 

@@ -1,8 +1,8 @@
-**RETTIFICA DOCUMENTAZIONE v0.1.3**
+# RETTIFICA DOCUMENTAZIONE v0.1.3
 
 Data 04/05/2026
 
-**RETTIFICHE GENERALI**
+## RETTIFICHE GENERALI
 
 È stato aggiunto un documento (admin.md), per la tracciabilità delle autorizzazioni dell’admin.
 
@@ -10,7 +10,7 @@ Data 04/05/2026
 
 Tutta la documentazione Word (.docx) è stata convertita in file Markdown (.md).
 
-**RETTIFICHE DB**
+## RETTIFICHE DB
 
 Nel DB nella tabella utenti è stato aggiunto il campo must_change_password, per gestire il primo accesso di un admin, con un relativo CHECK per assicurarsi che sia un valore booleano.
 

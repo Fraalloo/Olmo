@@ -1,18 +1,18 @@
-**ELENCO VERSIONI**
+# ELENCO VERSIONI
 
-**Versione v0.1.0**
+## Versione v0.1.0
 
 Data 23/03/2026
 
 Prima versione di sviluppo comprendente documentazione sul DB, schema CRUD e design.
 
-**Versione v0.1.1**
+## Versione v0.1.1
 
 Data 14/04/2026
 
 Versione comprendente rettifiche di documentazione e sviluppo del sistema di autenticazione al sito, con connessione al rispettivo DB.
 
-**Versione v0.1.2**
+## Versione v0.1.2
 
 Data 27/04/2026
 
@@ -20,7 +20,7 @@ Versione comprendente implementazione della home page, con: mappa usando Leaflet
 
 Aggiunta, inoltre, una directory con dati di testing.
 
-**Versione v0.1.3**
+## Versione v0.1.3
 
 Data 04/05/2026
 
@@ -28,7 +28,7 @@ Versione comprendente l’implementazione della pagina dell’articolo, le funzi
 
 È stato fatto un cambiamento al DB schema, descritto nella rettifica della versione 0.1.3.
 
-**Versione v0.1.4**
+## Versione v0.1.4
 
 Data 19/05/2026
 
@@ -52,7 +52,7 @@ Sono state aggiornate anche le risorse di test:
 
 È stato aggiunto il documento `inserimento.md` per descrivere il flusso di creazione degli articoli.
 
-**Versione v0.1.5**
+## Versione v0.1.5
 
 Data 21/05/2026
 
@@ -68,7 +68,7 @@ Versione comprendente l'implementazione della modifica degli articoli, con:
 
 Sono state aggiornate anche la pagina dettaglio articolo, la documentazione di inserimento/modifica, la documentazione database e la documentazione admin.
 
-**Versione v0.2.1**
+## Versione v0.2.1
 
 Data 25/05/2026
 
@@ -76,7 +76,7 @@ Aggiunti controlli in reject.php sulle risorse presenti nel file system.
 
 Creata la directory /routine per l'esecuzione di script di controllo sul web server.
 
-**Versione v0.2.2**
+## Versione v0.2.2
 
 Data 26/05/2026
 

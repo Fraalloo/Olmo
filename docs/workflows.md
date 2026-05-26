@@ -292,13 +292,14 @@ Il workflow:
 
 1. scarica il repository con `actions/checkout@v4`;
 2. installa Node.js con `actions/setup-node@v4`;
-3. esegue `markdownlint-cli2` tramite `npx`.
+3. installa `markdownlint-cli2` con `npm`;
+4. esegue `markdownlint-cli2`.
 
 Il comando principale è:
 
 ```bash
-npx markdownlint-cli2 \
-  --config ".github/config/markdownlint-cli2.jsonc" \
+markdownlint-cli2 \
+  --config ".github/config/.markdownlint-cli2.jsonc" \
   "ReadME.md" \
   "docs/**/*.md"
 ```
@@ -316,6 +317,7 @@ La configurazione è contenuta in:
 Attualmente sono disattivate alcune regole troppo invasive per la documentazione esistente:
 
 - `MD013`, lunghezza massima delle righe;
+- `MD024`, titoli duplicati in sezioni diverse;
 - `MD033`, HTML inline.
 
 ### - Protezione Del Branch Main

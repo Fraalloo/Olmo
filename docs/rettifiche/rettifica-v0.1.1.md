@@ -1,8 +1,8 @@
-**RETTIFICA DOCUMENTAZIONE v0.1.1**
+# RETTIFICA DOCUMENTAZIONE v0.1.1
 
 Data 14/04/2026
 
-**RETTIFICHE GENERALI**
+## RETTIFICHE GENERALI
 
 È stato aggiunto un documento (versioni.docx), per la tracciabilità delle versioni del software.
 
@@ -10,7 +10,7 @@ Data 14/04/2026
 
 È stato aggiunto un documento (auth.docx), per la documentazione specifica del sistema di autenticazione.
 
-**RETTIFICHE DB**
+## RETTIFICHE DB
 
 Nel DB nella tabella utenti nel campo pfp (path foto profilo) è stato rimosso il vincolo NOT NULL, per dare la possibilità agli utenti di non inserire la foto profilo. Verrà inserita al suo posto un’icona di default.
 

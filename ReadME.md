@@ -25,13 +25,13 @@ src/config/config.prod.php
 
 se si vuole usare la configurazione di produzione.
 
-3. Aprire dal browser:
+1. Aprire dal browser:
 
 ```text
 scripts/index.html
 ```
 
-4. Premere `Inizializza`.
+1. Premere `Inizializza`.
 
 Lo script importa sempre:
 

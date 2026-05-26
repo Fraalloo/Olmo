@@ -103,7 +103,7 @@ Questo componente contiene:
 Nella pagina `article.php` possono comparire azioni diverse in base allo stato della versione:
 
 | Stato versione | Azioni mostrate |
-|---|---|
+| --- | --- |
 | Non approvata | Convalida, Rifiuta |
 | Approvata e non hidden | Elimina |
 | Approvata e hidden | Ripristina |

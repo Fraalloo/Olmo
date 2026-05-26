@@ -21,7 +21,7 @@ L'inserimento crea un nuovo gruppo con versione `1`. La modifica di un articolo 
 Contiene gli account registrati.
 
 | Campo | Tipo | Vincoli | Descrizione |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `id_utente` | `INT` | PK, AUTO_INCREMENT | Identificativo utente |
 | `nome_utente` | `VARCHAR(50)` | UNIQUE, `LENGTH(nome_utente) > 3` | Nome utente |
 | `password_hash` | `VARCHAR(255)` | NOT NULL | Hash della password |
@@ -37,7 +37,7 @@ La registrazione pubblica crea solo utenti normali. Gli admin vengono promossi d
 Elenca le categorie disponibili.
 
 | Campo | Tipo | Vincoli | Descrizione |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `id_tipo_articolo` | `INT` | PK, AUTO_INCREMENT | Identificativo tipo |
 | `descrizione` | `VARCHAR(20)` | UNIQUE | `luogo`, `documento`, `testimonianza` |
 
@@ -46,7 +46,7 @@ Elenca le categorie disponibili.
 Rappresenta un articolo logico, indipendente dalle sue versioni.
 
 | Campo | Tipo | Vincoli | Descrizione |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `id_gruppo_articolo` | `INT` | PK, AUTO_INCREMENT | Identificativo gruppo |
 | `data_creazione` | `DATE` | DEFAULT `CURRENT_DATE` | Data creazione gruppo |
 
@@ -55,7 +55,7 @@ Rappresenta un articolo logico, indipendente dalle sue versioni.
 Contiene le versioni degli articoli.
 
 | Campo | Tipo | Vincoli | Descrizione |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `id_articolo` | `INT` | PK, AUTO_INCREMENT | Identificativo versione |
 | `id_gruppo_articolo` | `INT` | FK, UNIQUE con `versione` | Gruppo dell'articolo logico |
 | `id_tipo_articolo` | `INT` | FK, indice | Tipo articolo |
@@ -92,7 +92,7 @@ is_hidden = 0
 Contiene i file allegati agli articoli.
 
 | Campo | Tipo | Vincoli | Descrizione |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `id_file` | `INT` | PK, AUTO_INCREMENT | Identificativo file |
 | `id_articolo` | `INT` | FK, indice | Versione articolo collegata |
 | `nome_originale` | `VARCHAR(255)` | NOT NULL | Nome file caricato dall'utente |
@@ -109,7 +109,7 @@ Durante una modifica, un file mantenuto viene collegato alla nuova versione con 
 Contiene direttamente i link associati agli articoli. La vecchia tabella separata `link` è stata rimossa.
 
 | Campo | Tipo | Vincoli | Descrizione |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `id_link_articolo` | `INT` | PK, AUTO_INCREMENT | Identificativo link |
 | `id_articolo` | `INT` | FK, indice | Versione articolo collegata |
 | `url_link` | `VARCHAR(255)` | NOT NULL | URL di approfondimento |
