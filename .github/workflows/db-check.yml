@@ -1,0 +1,74 @@
+name: Database Checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  db-import:
+    name: Database Import
+    runs-on: ubuntu-latest
+
+    services:
+      mariadb:
+        image: mariadb:11
+        env:
+          MARIADB_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install MariaDB client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mariadb-client
+
+      - name: Import schema
+        run: |
+          mariadb \
+            --host=127.0.0.1 \
+            --port=3306 \
+            --user=root \
+            --password=root \
+            < db/db_schema.sql
+
+      - name: Import test records
+        run: |
+          for file in \
+            test/db/utenti.sql \
+            test/db/gruppi_articoli.sql \
+            test/db/articoli.sql \
+            test/db/file_articoli.sql \
+            test/db/link_articoli.sql
+          do
+            mariadb \
+              --host=127.0.0.1 \
+              --port=3306 \
+              --user=root \
+              --password=root \
+              Olmo < "$file"
+          done
+
+      - name: Verify imported records
+        run: |
+          mariadb \
+            --host=127.0.0.1 \
+            --port=3306 \
+            --user=root \
+            --password=root \
+            --database=Olmo \
+            --execute="
+              SELECT COUNT(*) AS utenti FROM utenti;
+              SELECT COUNT(*) AS gruppi FROM gruppi_articoli;
+              SELECT COUNT(*) AS articoli FROM articoli;
+              SELECT COUNT(*) AS file_articoli FROM file_articoli;
+              SELECT COUNT(*) AS link_articoli FROM link_articoli;
+            "

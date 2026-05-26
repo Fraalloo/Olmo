@@ -83,3 +83,9 @@ Data 26/05/2026
 Aggiunto un pulsante per copiare il contenuto di un articolo.
 
 Aggiunto un workflow per il controllo della sintassi PHP tramite linter.
+
+Aggiunto un workflow per il controllo della sintassi JavaScript tramite linter.
+
+Aggiunto un workflow per il controllo dello schema SQL e dei dati di test tramite importazione in un database MariaDB temporaneo.
+
+Aggiunto un workflow per il controllo della sintassi Markdown tramite linter.
