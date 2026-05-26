@@ -76,6 +76,35 @@ body {
     color: #171717;
 }
 
+.article-description-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.btn-copy-article {
+    border: 2px solid var(--button-border);
+    border-radius: 999px;
+    padding: 9px 18px;
+    background: #f7f6f3;
+    color: #5d5148;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-copy-article:hover {
+    background: #ffffff;
+}
+
+.copy-feedback {
+    min-height: 18px;
+    color: #35613b;
+    font-size: 14px;
+    font-weight: bold;
+}
+
 .article-actions {
     display: flex;
     align-items: center;

@@ -120,7 +120,24 @@
                         </div>
                     </div>
 
-                    <div class="article-description">
+                    <div class="article-description-actions">
+                        <button
+                            type="button"
+                            class="btn-copy-article"
+                            id="copyArticleContent"
+                            data-copy-target="articleDescription"
+                        >
+                            Copia contenuto
+                        </button>
+
+                        <span
+                            class="copy-feedback"
+                            id="copyArticleFeedback"
+                            aria-live="polite"
+                        ></span>
+                    </div>
+
+                    <div class="article-description" id="articleDescription">
                         <?= nl2br(esc($articolo["descrizione"])) ?>
                     </div>
                 </article>

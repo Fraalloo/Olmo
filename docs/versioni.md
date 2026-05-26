@@ -67,3 +67,19 @@ Versione comprendente l'implementazione della modifica degli articoli, con:
 - creazione dei nuovi record in `file_articoli` e `link_articoli` per la versione proposta.
 
 Sono state aggiornate anche la pagina dettaglio articolo, la documentazione di inserimento/modifica, la documentazione database e la documentazione admin.
+
+**Versione v0.2.1**
+
+Data 25/05/2026
+
+Aggiunti controlli in reject.php sulle risorse presenti nel file system.
+
+Creata la directory /routine per l'esecuzione di script di controllo sul web server.
+
+**Versione v0.2.2**
+
+Data 26/05/2026
+
+Aggiunto un pulsante per copiare il contenuto di un articolo.
+
+Aggiunto un workflow per il controllo della sintassi PHP tramite linter.
