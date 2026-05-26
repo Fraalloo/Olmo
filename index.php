@@ -1,5 +1,6 @@
 <?php
     require_once "src/config/app.php";
+    require_once "src/utils/utils.php";
 
     session_start();
 
@@ -34,13 +35,13 @@
     <body>
         <div class="page">
             <header class="topbar">
-                <a href="#" class="brand-small">Sotto l'Olmo</a>
+                <a href="./index.php" class="brand-small">Sotto l'Olmo</a>
 
                 <div class="nav">
                     <nav class="nav-links">
-                        <a href="#">Come funziona</a>
-                        <a href="#">Chi siamo</a>
-                        <a href="#">Contattaci</a>
+                        <a href="<?= htmlspecialchars(other_page_url("come_funziona")) ?>">Come funziona</a>
+                        <a href="<?= htmlspecialchars(other_page_url("chi_siamo")) ?>">Chi siamo</a>
+                        <a href="<?= htmlspecialchars(other_page_url("contattaci")) ?>">Contattaci</a>
                     </nav>
 
                     <div class="auth">
@@ -66,9 +67,10 @@
                 <div class="footer-inner-index">
                     <p>© 2026 Sotto l'Olmo. All rights reserved.</p>
                     <div class="footer-links">
-                        <a href="#">Privacy Policy</a>
-                        <a href="#">Terms of Service</a>
-                        <a href="#">Cookies Settings</a>
+                        <a href="<?= htmlspecialchars(other_page_url("privacy_policy")) ?>">Privacy Policy</a>
+                        <a href="<?= htmlspecialchars(other_page_url("terms_of_service")) ?>">Terms of Service</a>
+                        <a href="<?= htmlspecialchars(other_page_url("cookie_settings")) ?>">Cookies Settings</a>
+                        <a href="https://github.com/Fraalloo/Olmo">GitHub Repository</a>
                         <p>version <?= CURR_VERS ?></p>
                     </div>
                 </div>

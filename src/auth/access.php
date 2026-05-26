@@ -1,5 +1,6 @@
 <?php
     require_once "../config/app.php";
+    require_once "../utils/utils.php";
     require_once "../components/footer/footer.php";
 
     session_start();
@@ -45,9 +46,9 @@
                 <a href="../../index.php" class="brand-small">Sotto l'Olmo</a>
 
                 <nav class="nav-links">
-                    <a href="#">Come funziona</a>
-                    <a href="#">Chi siamo</a>
-                    <a href="#">Contattaci</a>
+                    <a href="<?= htmlspecialchars(other_page_url("come_funziona")) ?>">Come funziona</a>
+                    <a href="<?= htmlspecialchars(other_page_url("chi_siamo")) ?>">Chi siamo</a>
+                    <a href="<?= htmlspecialchars(other_page_url("contattaci")) ?>">Contattaci</a>
                 </nav>
             </header>
 

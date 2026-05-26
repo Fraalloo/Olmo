@@ -101,9 +101,9 @@
             </a>
 
             <nav class="topbar_nav">
-                <a href="#">Come funziona</a>
-                <a href="#">Chi siamo</a>
-                <a href="#">Contattaci</a>
+                <a href="<?= htmlspecialchars(other_page_url("come_funziona")) ?>">Come funziona</a>
+                <a href="<?= htmlspecialchars(other_page_url("chi_siamo")) ?>">Chi siamo</a>
+                <a href="<?= htmlspecialchars(other_page_url("contattaci")) ?>">Contattaci</a>
 
                 <form class="search-form" id="nominatimForm">
                     <input

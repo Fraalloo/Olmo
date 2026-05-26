@@ -52,9 +52,9 @@
             </a>
 
             <nav class="topbar_nav">
-                <a href="#">Come funziona</a>
-                <a href="#">Chi siamo</a>
-                <a href="#">Contattaci</a>
+                <a href="<?= htmlspecialchars(other_page_url("come_funziona")) ?>">Come funziona</a>
+                <a href="<?= htmlspecialchars(other_page_url("chi_siamo")) ?>">Chi siamo</a>
+                <a href="<?= htmlspecialchars(other_page_url("contattaci")) ?>">Contattaci</a>
 
                 <a class="btn-home" href="../home/home.php">Home</a>
                 <a class="btn-logout" href="../../auth/logout.php">Logout</a>

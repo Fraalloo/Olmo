@@ -1,0 +1,57 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-image: url("../../assets/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.other-page {
+    width: min(920px, calc(100% - 40px));
+    margin: auto;
+    padding: 34px;
+    background: #d7cfc2;
+    border-radius: 18px;
+    color: #171717;
+    line-height: 1.65;
+}
+
+.other-page h1 {
+    font-family: "Vibur", "Brush Script MT", "Segoe Script", cursive;
+    color: var(--accent);
+    font-size: 58px;
+    font-weight: 400;
+    line-height: 1;
+    margin-bottom: 18px;
+}
+
+.other-page h2 {
+    margin-top: 28px;
+    margin-bottom: 8px;
+    color: #3d3329;
+    font-size: 22px;
+}
+
+.other-page p,
+.other-page li {
+    font-size: 17px;
+}
+
+.other-page ul {
+    padding-left: 22px;
+}
+
+@media(max-width: 600px) {
+    .other-page {
+        width: calc(100% - 24px);
+        padding: 24px;
+        margin: 24px auto;
+    }
+
+    .other-page h1 {
+        font-size: 44px;
+    }
+}
