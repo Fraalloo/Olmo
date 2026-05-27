@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+Disallow: /src/auth/
+Disallow: /src/pages/admin/
+Disallow: /src/pages/convalida/
+Disallow: /src/pages/edit/
+Disallow: /src/pages/insert/
+Disallow: /scripts/
+Disallow: /routine/
+Disallow: /test/
+Disallow: /db/
+
+Sitemap: /sitemap.php

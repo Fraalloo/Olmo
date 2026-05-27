@@ -84,8 +84,24 @@ Aggiunto un pulsante per copiare il contenuto di un articolo.
 
 Aggiunto un workflow per il controllo della sintassi PHP tramite linter.
 
+## Versione v0.2.3
+
+Data 26/05/2026
+
 Aggiunto un workflow per il controllo della sintassi JavaScript tramite linter.
 
 Aggiunto un workflow per il controllo dello schema SQL e dei dati di test tramite importazione in un database MariaDB temporaneo.
 
 Aggiunto un workflow per il controllo della sintassi Markdown tramite linter.
+
+## Versione v0.2.4
+
+Data 27/05/2026
+
+Aggiunto un pulsante per esportare un articolo in formato PDF.
+
+Aggiunti dei tag OG creati dinamicamente negli articoli per migliorare l'indicizzazione.
+
+Aggiunto un file sitemap.php per creare una sitemap XML dinamica per migliorare l'indicizzazione.
+
+Aggiunto il file robots.txt per indicare ai crawler la sitemap e limitare la scansione delle aree operative del progetto.

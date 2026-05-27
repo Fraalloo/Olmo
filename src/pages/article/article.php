@@ -39,6 +39,21 @@
 
     $hasCoords = $articolo["latitudine"] !== null && $articolo["longitudine"] !== null;
     $banner = !empty($articolo["banner"]) ? TO_ASSETS . $articolo["banner"] : null;
+    $metaDescription = trim(preg_replace("/\s+/", " ", $articolo["descrizione"]));
+    if(strlen($metaDescription) > 160){
+        $metaDescription = substr($metaDescription, 0, 157)."...";
+    }
+
+    $scheme = (
+        (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] !== "off") ||
+        (($_SERVER["SERVER_PORT"] ?? "") === "443")
+    ) ? "https" : "http";
+    $host = $_SERVER["HTTP_HOST"] ?? "";
+    $scriptDir = str_replace("\\", "/", dirname($_SERVER["SCRIPT_NAME"] ?? ""));
+    $rootDir = rtrim(dirname($scriptDir, 3), "/");
+    $baseUrl = $host !== "" ? $scheme."://".$host.$rootDir : "";
+    $articleUrl = $baseUrl !== "" ? $baseUrl."/src/pages/article/article.php?id=".$articleId : "";
+    $metaImage = ($baseUrl !== "" && !empty($articolo["banner"])) ? $baseUrl."/".ltrim($articolo["banner"], "/") : "";
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -46,6 +61,19 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title><?= esc($articolo["titolo"]) ?></title>
+        <meta name="description" content="<?= esc($metaDescription) ?>">
+        <meta name="author" content="<?= esc($articolo["autore"]) ?>">
+        <meta property="og:type" content="article">
+        <meta property="og:locale" content="it_IT">
+        <meta property="og:site_name" content="<?= esc(APP_NAME) ?>">
+        <meta property="og:title" content="<?= esc($articolo["titolo"]) ?>">
+        <meta property="og:description" content="<?= esc($metaDescription) ?>">
+        <?php if($articleUrl !== ""): ?>
+            <meta property="og:url" content="<?= esc($articleUrl) ?>">
+        <?php endif; ?>
+        <?php if($metaImage !== ""): ?>
+            <meta property="og:image" content="<?= esc($metaImage) ?>">
+        <?php endif; ?>
 
         <link rel="stylesheet" href="../../../style.css">
         <link rel="stylesheet" href="article.css">
@@ -121,6 +149,14 @@
                     </div>
 
                     <div class="article-description-actions">
+                        <button
+                            type="button"
+                            class="btn-copy-article"
+                            id="exportArticlePdf"
+                        >
+                            Scarica PDF
+                        </button>
+
                         <button
                             type="button"
                             class="btn-copy-article"
@@ -290,6 +326,7 @@
             <script src="../../components/article_admin_actions/article_admin_actions.js"></script>
         <?php endif; ?>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
         <script type="module" src="article.js"></script>
     </body>
 </html>

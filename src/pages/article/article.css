@@ -98,11 +98,93 @@ body {
     background: #ffffff;
 }
 
+.btn-copy-article:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
 .copy-feedback {
     min-height: 18px;
     color: #35613b;
     font-size: 14px;
     font-weight: bold;
+}
+
+.article-pdf-wrapper {
+    position: fixed;
+    top: 0;
+    left: -9999px;
+    z-index: -1;
+    background: #ffffff;
+}
+
+.article-pdf-document {
+    width: 760px;
+    padding: 22px;
+    background: #ffffff;
+    color: #171717;
+}
+
+.article-pdf-banner {
+    width: 100%;
+    height: 220px;
+    margin: 0 0 24px;
+    border: 0;
+    border-radius: 0;
+}
+
+.article-pdf-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.article-pdf-export {
+    min-height: auto;
+}
+
+.article-pdf-export .article-title-row {
+    display: block;
+}
+
+.article-pdf-export h1 {
+    font-size: 48px;
+}
+
+.article-pdf-export .article-description {
+    max-width: none;
+}
+
+.article-pdf-extra-panel {
+    margin-top: 28px;
+    padding: 20px;
+    background: #f1eee8;
+    color: #171717;
+    border-radius: 18px;
+}
+
+.article-pdf-extra-panel h2 {
+    margin-bottom: 14px;
+    color: #523923;
+    font-size: 22px;
+}
+
+.article-pdf-extra {
+    display: grid;
+    gap: 18px;
+}
+
+.article-pdf-extra .info-box {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    color: #171717;
+    border-radius: 0;
+}
+
+.article-pdf-extra .side-link {
+    color: #523923;
+    text-decoration: underline;
 }
 
 .article-actions {
